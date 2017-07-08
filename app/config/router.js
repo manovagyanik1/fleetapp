@@ -1,8 +1,8 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-
-import Feed from '../screens/Feed';
+import Feed from '../screens/feed';
+import Comments from '../screens/comments';
 import Settings from '../screens/Settings';
 import UserDetail from '../screens/UserDetail';
 import Me from '../screens/Me';
@@ -14,12 +14,12 @@ export const FeedStack = StackNavigator({
       title: 'Feed',
     },
   },
-  Details: {
-    screen: UserDetail,
+  Comments: {
+    screen: Comments,
     navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.name.first.toUpperCase()} ${navigation.state.params.name.last.toUpperCase()}`,
+      title: 'Comments',
     }),
-  },
+  }
 });
 
 export const Tabs = TabNavigator({

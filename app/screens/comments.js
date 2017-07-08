@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {fetchFeed} from '../thunks';
+import {fetchComments} from '../thunks';
 import FeedCard from "../components/feedCard";
 import {
   Text,
@@ -10,49 +10,47 @@ import {
 } from 'react-native';
 import { users } from '../config/data';
 
-class FeedScreenElements extends Component {
+class CommentsScreenElements extends Component {
   componentDidMount() {
       this.props.onMountDispatch();
   }
 
-  onCommentClick = (index) => {
-    this.props.navigation.navigate('Comments', {index});
-  };
-
   render() {
-    const {feed: {posts: {results}}} = this.props;
+    const {index, comments} = this.props;
     return (
             results.length > 0 ?
               <FlatList
                 data={results}
-                renderItem={({item, index}) => {
+                renderItem={({item}) => {
                   return <FeedCard
                     card={item}
-                    onCommentClick={() => this.onCommentClick(index)}
+                    onCommentClick={onItemClick}
                     onLikeClick={() => console.log("like clicked")}
                     onShareClick={() => console.log("share clicked")}
                   />
-      }}
-      keyExtractor={(card, index) => index}
-    />
+                }}
+                keyExtractor={(card, index) => index}
+            />
             : null
       );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log("hello"); 
+    const {index} = ownProps.navigation.state.params;
     return {
-        feed: state.feed
+        comments: state.feed.posts.results[index].comments,
+        index,
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     onMountDispatch: () => {
-        dispatch(fetchFeed({}));
-    },
+        dispatch(fetchComments({}));
+    }
 }) ;
 
+const Comments = connect(mapStateToProps, mapDispatchToProps)(CommentsScreenElements);
 
-const Feed = connect(mapStateToProps, mapDispatchToProps)(FeedScreenElements);
-
-export default Feed;
+export default Comments;
