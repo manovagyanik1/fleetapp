@@ -38,4 +38,12 @@ export default class Gen {
             console.log(...printStatement);
         }
     }
+
+    static merge(a1, a2) {
+        const hash = new Map();
+        a1.concat(a2).forEach((obj) => {
+            hash.set(obj['_id'], Object.assign(hash.get(obj['_id']) || {}, obj));
+        });
+        return Array.from(hash.values());
+    }
 }
