@@ -46,4 +46,8 @@ export default class Gen {
         });
         return Array.from(hash.values());
     }
+
+    static getReplyText(replyCount) {
+        return replyCount > 1 ? `${replyCount} replies` : '1 reply';
+    }
 }

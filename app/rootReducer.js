@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {ActionTypes} from './actions';
-import Gen from "./utils/gen";
+import Gen from './utils/gen';
 
 const feed = (state = {
 	posts: {
@@ -27,6 +27,39 @@ const feed = (state = {
 		newState.posts.results[feedIndex].comments = comments;
 		return newState;
 	}
+	case ActionTypes.REQUEST_LIKE_COMMENT: {
+		const {feedIndex, commentIndex} = action;
+		const newState = {...state};
+		newState.posts.results[feedIndex].comments.results[commentIndex].currentUserReaction = 'LIKE';
+		// TODO: update userReaction count
+        return newState;
+	}
+    case ActionTypes.REQUEST_DISLIKE_COMMENT: {
+        const {feedIndex, commentIndex} = action;
+        const newState = {...state};
+        newState.posts.results[feedIndex].comments.results[commentIndex].currentUserReaction = null;
+        // TODO: update userReaction count
+        return newState;
+    }
+    case ActionTypes.REQUEST_REACT_FEED: {
+        const {feedIndex, reactionType} = action;
+        const newState = {...state};
+        const prevUserReaction = newState.posts.results[feedIndex].currentUserReaction;
+        // decrement count of previous user reaction and increment the count of current user reaction
+        if (prevUserReaction) {
+            newState.posts.results[feedIndex].userReaction[prevUserReaction] -= 1;
+        }
+        newState.posts.results[feedIndex].currentUserReaction = reactionType;
+        newState.posts.results[feedIndex].userReaction[reactionType] += 1;
+        return newState;
+    }
+    case ActionTypes.REQUEST_UNREACT_FEED: {
+        const {feedIndex, reactionType} = action;
+        const newState = {...state};
+        newState.posts.results[feedIndex].currentUserReaction = null;
+        newState.posts.results[feedIndex].userReaction[reactionType] -= 1;
+        return newState;
+    }
 	default:
 		return state;
 	}

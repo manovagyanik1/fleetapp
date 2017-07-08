@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CommentProfileHeader from './commentProfileHeader';
-import Gen from "../utils/gen";
+import Gen from '../utils/gen';
 
 const styles = StyleSheet.create({
 	container: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 			height: 4,
 		},
 	},
-	cardFooter: {
+    bottomContainer: {
 		flex: 1,
 		flexDirection: 'row',
 		height: 64,
@@ -44,11 +44,20 @@ class CommentCard extends Component {
 	render() {
 		const data = this.props.card;
 		const {onLikeClick, onReplyClick, onProfileClick} = this.props;
-		const {displayName, postId, text, currentUserReaction, createdAt, userId} = data;
+		const {displayName, postId, replyCount, text, currentUserReaction, createdAt, userId} = data;
 		const time = Gen.getDisplayTime(createdAt);
+		// TODO: add userlike count
 		return (
 			<View style={styles.container}>
 				<CommentProfileHeader name={displayName} url={'https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584_1280.png'} onProfileClick={onProfileClick} time={time} />
+				<Text>{text}</Text>
+				<View style={styles.bottomContainer}>
+					<Text>{Gen.getReplyText(replyCount)}</Text>
+					<TouchableHighlight onPress={() => this.props.onLikeClick(data.id)}>
+						<Icon name='thumbs-up' size={20} color='#000' style={styles.icon} />
+					</TouchableHighlight>
+					<Text>{replyCount}</Text>
+				</View>
 			</View>
 		);
 	}
