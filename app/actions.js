@@ -44,4 +44,13 @@ export class Actions {
             type: ActionTypes.RECEIVE_FEED
         }
     };
+
+    static receiveComments = ({feedIndex, beforeTimeStamp, paginatedComments}) => {
+        return {
+            feedIndex,
+            beforeTimeStamp,
+            paginatedComments,
+            type: ActionTypes.RECEIVE_COMMENTS
+        }
+    };
 }

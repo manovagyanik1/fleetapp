@@ -16,6 +16,11 @@ export default class Gen {
         return Gen.isDevelopment() ? 'https://quicknodeserver.herokuapp.com' : 'https://lolmenow.herokuapp.com';
     }
 
+    static getDisplayTime(time) {
+        // TODO: implement this
+        return time;
+    }
+
     static getAuth() {
         return {
             headers: {
