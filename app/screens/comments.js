@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchComments} from '../thunks';
-import FeedCard from '../components/feedCard';
+import {fetchComments, fetchCommentReaction} from '../thunks';
 import {
   Text,
   View,
@@ -18,28 +17,28 @@ class CommentsScreenElements extends Component {
 	}
 
 	render() {
-		const {index: feedIndex, comments} = this.props;
+		const {index: feedIndex, comments, onLikeClick, onProfileClick} = this.props;
 		if (!comments) return null;
 		const {results} = comments;
 		return (
           results.length > 0 ?
-			<FlatList
-				data={results}
-				renderItem={({item, index}) => (<CommentCard
-					card={item}
-					onProfileClick={() => Gen.log('profile clicked')}
-					onLikeClick={() => Gen.log('like clicked')}
-					onReplyClick={() => Gen.log('reply clicked')}
-				/>)}
-				keyExtractor={(card, index) => index}
-			/>
+	<FlatList
+		data={results}
+		renderItem={({item, index}) => (<CommentCard
+			card={item}
+			onProfileClick={onProfileClick}
+			onLikeClick={onLikeClick}
+			feedIndex={feedIndex}
+			commentIndex={index}
+		/>)}
+		keyExtractor={(card, index) => index}
+	/>
               : null
 		);
 	}
 }
 
 const mapStateToProps = (state, ownProps) => {
-	Gen.log('hello');
 	const {index} = ownProps.navigation.state.params;
 	return {
 		comments: state.feed.posts.results[index].comments,
@@ -52,6 +51,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onMountDispatch: () => {
 			dispatch(fetchComments({feedIndex: index}));
+		},
+		onLikeClick: ({feedIndex, commentIndex, commentId}) => {
+		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId}));
+		},
+		onProfileClick: ({userId}) => {
+			Gen.log(`Profile clicked for user id${userId}`);
 		},
 	};
 };

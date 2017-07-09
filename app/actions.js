@@ -5,6 +5,8 @@ export const ActionTypes = {
     REQUEST_COMMENTS: "request_comments",
     RECEIVE_COMMENTS: "receive_comments",
     ERROR_COMMENTS: "error_comments",
+    ERROR_POST_USER_REACTION: "error_post_user_reaction",
+    ERROR_COMMENT_USER_REACTION: "error_comment_user_reaction",
     INCREMENT_API_COUNT: "increment_api_count",
     DECREMENT_API_COUNT: "decrement_api_count",
     REQUEST_LIKE_COMMENT: "request_like_comment",
@@ -15,6 +17,10 @@ export const ActionTypes = {
     RECEIVE_REACT_FEED: "receive_react_feed",
     REQUEST_UNREACT_FEED: "request_unreact_feed",
     RECEIVE_UNREACT_FEED: "receive_unreact_feed",
+    REQUEST_POST_USER_REACTION: 'request_post_user_reaction',
+    REQUEST_COMMENT_USER_REACTION: 'request_comment_user_reaction',
+    RECEIVE_POST_USER_REACTION: 'receive_post_user_reaction',
+    RECEIVE_COMMENT_USER_REACTION: 'receive_comment_user_reaction',
     REQUEST_SHARE: "request_share",
     RECEIVE_SHARE: "receive_share",
 };
@@ -31,6 +37,14 @@ export class Actions {
 
     static errorFeed = () => ({
         type: ActionTypes.ERROR_FEED,
+    });
+
+    static errorCommentUserReaction = () => ({
+        type: ActionTypes.ERROR_COMMENT_USER_REACTION,
+    });
+
+    static errorPostUserReaction = () => ({
+        type: ActionTypes.ERROR_POST_USER_REACTION,
     });
 
     static errorComments = () => ({
@@ -63,4 +77,45 @@ export class Actions {
             type: ActionTypes.RECEIVE_COMMENTS
         }
     };
+
+    static requestPostUserReaction = ({feedIndex, reactionType, postId}) => {
+        return {
+            feedIndex,
+            postId,
+            reactionType,
+            type: ActionTypes.REQUEST_POST_USER_REACTION
+        }
+    };
+
+    static requestCommentUserReaction = ({feedIndex, commentIndex, commentId, reactionType}) => {
+        // NOTE: right as of now reactionType for a comment is also LIKE
+        return {
+            feedIndex,
+            commentIndex,
+            commentId,
+            reactionType,
+            type: ActionTypes.REQUEST_COMMENT_USER_REACTION
+        }
+    };
+
+    static receivePostUserReaction = ({feedIndex, post, feedId}) => {
+        return {
+            feedIndex,
+            feedId,
+            post,
+            type: ActionTypes.RECEIVE_POST_USER_REACTION
+        }
+    };
+
+    static receiveCommentUserReaction = ({feedIndex, commentIndex, comment, commentId}) => {
+        return {
+            feedIndex,
+            commentId,
+            commentIndex,
+            comment,
+            type: ActionTypes.RECEIVE_COMMENT_USER_REACTION
+        }
+    };
+
+
 }

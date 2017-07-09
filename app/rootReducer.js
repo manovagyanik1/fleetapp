@@ -27,7 +27,7 @@ const feed = (state = {
 		newState.posts.results[feedIndex].comments = comments;
 		return newState;
 	}
-	case ActionTypes.REQUEST_LIKE_COMMENT: {
+	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
 		const {feedIndex, commentIndex} = action;
 		const newState = {...state};
 		newState.posts.results[feedIndex].comments.results[commentIndex].currentUserReaction = 'LIKE';

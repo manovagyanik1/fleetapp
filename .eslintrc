@@ -362,7 +362,7 @@
     'indent': ['warn', 'tab'],
     'object-curly-spacing': ['error', 'never'],
     'react/jsx-indent': ['error', 'tab'],
-    'jsx-quotes': ['error', 'prefer-single'],
+    'jsx-quotes': 'off',
     'react/prefer-es6-class': ['error', 'never'],
     'react/require-extension': ['error', { extensions: ['.js'] }],
     'react/jsx-indent-props': ['error', 'tab'],

@@ -43,19 +43,21 @@ class CommentCard extends Component {
 
 	render() {
 		const data = this.props.card;
-		const {onLikeClick, onReplyClick, onProfileClick} = this.props;
-		const {displayName, postId, replyCount, text, currentUserReaction, createdAt, userId} = data;
+		const {onLikeClick, onProfileClick, feedIndex, commentIndex} = this.props;
+		const {postId, _id, text, currentUserReaction, userReaction, createdAt, user: {_id: userId, displayName, imageUrl}} = data;
+		const userReactionCount = Gen.getUserReactionCount({type: 'LIKE', userReaction});
 		const time = Gen.getDisplayTime(createdAt);
 		// TODO: add userlike count
+        // TODO: add currentUserReaction effect on like
 		return (
 			<View style={styles.container}>
-				<CommentProfileHeader name={displayName} url={'https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584_1280.png'} onProfileClick={onProfileClick} time={time} />
+				<CommentProfileHeader name={displayName} url={imageUrl} onProfileClick={onProfileClick} time={time} />
 				<Text>{text}</Text>
 				<View style={styles.bottomContainer}>
-					<TouchableHighlight onPress={() => this.props.onLikeClick(data.id)}>
+					<TouchableHighlight onPress={() => this.props.onLikeClick({feedIndex, commentIndex, commentId: data['_id']})}>
 						<Icon name='thumbs-up' size={20} color='#000' style={styles.icon} />
 					</TouchableHighlight>
-					<Text>{replyCount}</Text>
+					<Text>{userReactionCount}</Text>
 				</View>
 			</View>
 		);
@@ -64,8 +66,9 @@ class CommentCard extends Component {
 
 CommentCard.propTypes = {
 	card: PropType.object.isRequired,
+    feedIndex: PropType.number.isRequired,
+    commentIndex: PropType.number.isRequired,
 	onLikeClick: PropType.func.isRequired,
-	onReplyClick: PropType.func.isRequired,
 	onProfileClick: PropType.func.isRequired,
 };
 

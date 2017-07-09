@@ -39,11 +39,16 @@ export default class Gen {
         }
     }
 
+    // merge two arrays a1 and a2 based on _id key.. maintain the order of elements as well
     static merge(a1, a2) {
         const hash = new Map();
         a1.concat(a2).forEach((obj) => {
             hash.set(obj['_id'], Object.assign(hash.get(obj['_id']) || {}, obj));
         });
         return Array.from(hash.values());
+    }
+
+    static getUserReactionCount({userReaction, type}) {
+        return userReaction ? userReaction[type] : null;
     }
 }
