@@ -55,4 +55,8 @@ export default class Gen {
 	static max(a, b) {
 		return a > b ? a : b;
 	}
+
+	static deepClone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
 }

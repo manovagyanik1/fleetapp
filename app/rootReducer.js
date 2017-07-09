@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import {ActionTypes} from './actions';
 import Gen from './utils/gen';
 
+// NOTE: do Gen.deepClone(obj) whereever you want to copy object
 const feed = (state = {
 	posts: {
 		results: [],
@@ -23,13 +24,13 @@ const feed = (state = {
 		const statePageInfo = state.posts.results[feedIndex].comments ? {...state.posts.results[feedIndex].comments.pageInfo} : {};
 		statePageInfo.nextPageUrl = pageInfo.nextPageUrl;
 		const comments = {results: commentResults, pageInfo: statePageInfo};
-		const newState = {...state};
+		const newState = Gen.deepClone(state);
 		newState.posts.results[feedIndex].comments = comments;
 		return newState;
 	}
 	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
 		const {feedIndex, commentIndex} = action;
-		const newState = {...state};
+		const newState = Gen.deepClone(state);
 		const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
 		comment.currentUserReaction = 'LIKE';
         comment.userReaction['LIKE'] += 1;
@@ -37,7 +38,7 @@ const feed = (state = {
 	}
     case ActionTypes.REQUEST_COMMENT_USER_DEREACTION: {
         const {feedIndex, commentIndex} = action;
-        const newState = {...state};
+        const newState = Gen.deepClone(state);
         const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
         comment.currentUserReaction = null;
         comment.userReaction['LIKE'] = Gen.max(comment.userReaction['LIKE'] - 1, 0);
@@ -45,7 +46,7 @@ const feed = (state = {
     }
     case ActionTypes.REQUEST_REACT_FEED: {
         const {feedIndex, reactionType} = action;
-        const newState = {...state};
+        const newState = Gen.deepClone(state);
         const prevUserReaction = newState.posts.results[feedIndex].currentUserReaction;
         // decrement count of previous user reaction and increment the count of current user reaction
         if (prevUserReaction) {
@@ -57,7 +58,7 @@ const feed = (state = {
     }
     case ActionTypes.REQUEST_UNREACT_FEED: {
         const {feedIndex, reactionType} = action;
-        const newState = {...state};
+        const newState = Gen.deepClone(state);
         newState.posts.results[feedIndex].currentUserReaction = null;
         newState.posts.results[feedIndex].userReaction[reactionType] -= 1;
         return newState;
