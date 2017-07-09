@@ -52,8 +52,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		onMountDispatch: () => {
 			dispatch(fetchComments({feedIndex: index}));
 		},
-		onLikeClick: ({feedIndex, commentIndex, commentId}) => {
-		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId}));
+		onLikeClick: ({feedIndex, commentIndex, commentId, reactionType}) => {
+		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId, reactionType}));
 		},
 		onProfileClick: ({userId}) => {
 			Gen.log(`Profile clicked for user id${userId}`);

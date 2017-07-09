@@ -30,15 +30,17 @@ const feed = (state = {
 	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
 		const {feedIndex, commentIndex} = action;
 		const newState = {...state};
-		newState.posts.results[feedIndex].comments.results[commentIndex].currentUserReaction = 'LIKE';
-		// TODO: update userReaction count
+		const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
+		comment.currentUserReaction = 'LIKE';
+        comment.userReaction['LIKE'] += 1;
         return newState;
 	}
-    case ActionTypes.REQUEST_DISLIKE_COMMENT: {
+    case ActionTypes.REQUEST_COMMENT_USER_DEREACTION: {
         const {feedIndex, commentIndex} = action;
         const newState = {...state};
-        newState.posts.results[feedIndex].comments.results[commentIndex].currentUserReaction = null;
-        // TODO: update userReaction count
+        const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
+        comment.currentUserReaction = null;
+        comment.userReaction['LIKE'] = Gen.max(comment.userReaction['LIKE'] - 1, 0);
         return newState;
     }
     case ActionTypes.REQUEST_REACT_FEED: {
