@@ -52,7 +52,6 @@ class CommentCard extends Component {
 				<CommentProfileHeader name={displayName} url={'https://cdn.pixabay.com/photo/2013/07/13/10/07/man-156584_1280.png'} onProfileClick={onProfileClick} time={time} />
 				<Text>{text}</Text>
 				<View style={styles.bottomContainer}>
-					<Text>{Gen.getReplyText(replyCount)}</Text>
 					<TouchableHighlight onPress={() => this.props.onLikeClick(data.id)}>
 						<Icon name='thumbs-up' size={20} color='#000' style={styles.icon} />
 					</TouchableHighlight>
