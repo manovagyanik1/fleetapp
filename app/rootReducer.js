@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 import {ActionTypes} from './actions';
 import Gen from './utils/gen';
+import Constants from './constants';
 
 // NOTE: do Gen.deepClone(obj) whereever you want to copy object
 const feed = (state = {
@@ -44,7 +45,7 @@ const feed = (state = {
         comment.userReaction['LIKE'] = Gen.max(comment.userReaction['LIKE'] - 1, 0);
         return newState;
     }
-    case ActionTypes.REQUEST_REACT_FEED: {
+    case ActionTypes.REQUEST_POST_USER_REACTION: {
         const {feedIndex, reactionType} = action;
         const newState = Gen.deepClone(state);
         const prevUserReaction = newState.posts.results[feedIndex].currentUserReaction;
@@ -56,7 +57,7 @@ const feed = (state = {
         newState.posts.results[feedIndex].userReaction[reactionType] += 1;
         return newState;
     }
-    case ActionTypes.REQUEST_UNREACT_FEED: {
+    case ActionTypes.REQUEST_POST_USER_DEREACTION: {
         const {feedIndex, reactionType} = action;
         const newState = Gen.deepClone(state);
         newState.posts.results[feedIndex].currentUserReaction = null;

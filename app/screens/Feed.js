@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {fetchFeed} from '../thunks';
+import {fetchFeed, fetchFeedReaction} from '../thunks';
 import FeedCard from "../components/feedCard";
 import {
   Text,
@@ -20,7 +20,7 @@ class FeedScreenElements extends Component {
   };
 
   render() {
-    const {feed: {posts: {results}}} = this.props;
+    const {feed: {posts: {results}}, onReactionClick} = this.props;
     return (
             results.length > 0 ?
               <FlatList
@@ -29,7 +29,8 @@ class FeedScreenElements extends Component {
                   return <FeedCard
                     card={item}
                     onCommentClick={() => this.onCommentClick(index)}
-                    onLikeClick={() => console.log("like clicked")}
+                    onReactionClick={({feedIndex, feedId, reactionType}) => onReactionClick({feedIndex, feedId, reactionType})}
+                    feedIndex={index}
                     onShareClick={() => console.log("share clicked")}
                   />
       }}
@@ -49,6 +50,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
     onMountDispatch: () => {
         dispatch(fetchFeed({}));
+    },
+    onReactionClick: ({feedIndex, feedId, reactionType}) => {
+        dispatch(fetchFeedReaction({feedIndex, feedId, reactionType}));
     },
 }) ;
 

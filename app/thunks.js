@@ -1,5 +1,7 @@
 import {ActionTypes, Actions} from './actions';
 import Gen from './utils/gen';
+import * as Constants from './constants';
+
 const errorFunc = (errorAction, dispatch) => (err) => {
 	Gen.log(err);
 	dispatch(Actions.decrementAPICount({}));
@@ -63,5 +65,33 @@ export const fetchCommentReaction = ({feedIndex, commentIndex, commentId, reacti
 	dispatch(Actions.decrementAPICount());
 	dispatch(Actions.receiveCommentUserReaction({feedIndex, commentIndex, commentId, comment}));
 })
-        .catch(errorFunc(Actions.errorPostUserReaction, dispatch));
+        .catch(errorFunc(Actions.errorCommentUserReaction, dispatch));
+};
+
+export const fetchFeedReaction = ({feedIndex, feedId, reactionType}) => (dispatch) => {
+    dispatch(Actions.requestPostUserReaction({feedIndex, feedId, reactionType}));
+    dispatch(Actions.incrementAPICount({}));
+    const url = `${Gen.getBaseUrl()}/v1/user-reaction`;
+    const postData = {
+        targetId: feedId,
+        reaction: reactionType,
+        type: Constants.CONTENT_TYPE.POST,
+    };
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+        .then(response => {
+            return response.json();
+        })
+        .then(comment => {
+            Gen.log(comment);
+            dispatch(Actions.decrementAPICount());
+            dispatch(Actions.receivePostUserReaction({feedIndex, feedId, comment}));
+        })
+        .catch(errorFunc(Actions.errorPostUserReaction(), dispatch));
 };
