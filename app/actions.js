@@ -61,7 +61,7 @@ export class Actions {
         type: ActionTypes.REQUEST_FEED
     });
 
-    static requestComment = ({nextPageUrl}) => ({
+    static requestComments = ({nextPageUrl}) => ({
         nextPageUrl,
         type: ActionTypes.REQUEST_COMMENTS
     });

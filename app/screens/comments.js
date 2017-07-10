@@ -35,7 +35,7 @@ class CommentsScreenElements extends Component {
 	}
 
 	render() {
-		const {index: feedIndex, comments, onLikeClick, onProfileClick, postId, onCommentPost} = this.props;
+		const {index: feedIndex, comments, onLikeClick, onProfileClick, postId, onCommentPost, onMountDispatch, fetchNextComments} = this.props;
 		if (!comments) return null;
 		const {results} = comments;
 		return (
@@ -43,6 +43,10 @@ class CommentsScreenElements extends Component {
 	<View style={styles.container}>
 		<FlatList
 			data={results}
+			refreshing={comments.isFetching === true}
+			onRefresh={() => onMountDispatch()}
+			onEndReachedThreshold={0.5}
+			onEndReached={() => fetchNextComments({nextPageUrl: comments.pageInfo.nextPageUrl})}
 			style={styles.commentList}
 			removeClippedSubviews={false}
 			renderItem={({item, index}) => (<CommentCard
@@ -66,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		comments: state.feed.posts.results[index].comments,
 		index,
-        postId: state.feed.posts.results[index]._id,
+		postId: state.feed.posts.results[index]._id,
 	};
 };
 
@@ -76,15 +80,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		onMountDispatch: () => {
 			dispatch(fetchComments({feedIndex: index}));
 		},
+        fetchNextComments: ({nextPageUrl}) => {
+            dispatch(fetchComments({nextPageUrl}));
+        },
 		onLikeClick: ({feedIndex, commentIndex, commentId, reactionType}) => {
 		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId, reactionType}));
 		},
 		onProfileClick: ({userId}) => {
 			Gen.log(`Profile clicked for user id${userId}`);
 		},
-        onCommentPost: ({feedIndex, postId, text}) => {
-            dispatch(fetchComment({feedIndex, postId, text}));
-        },
+		onCommentPost: ({feedIndex, postId, text}) => {
+			dispatch(fetchComment({feedIndex, postId, text}));
+		},
 	};
 };
 

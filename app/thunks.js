@@ -25,17 +25,19 @@ export const fetchFeed = ({nextPageUrl = null}) =>
             .catch(errorFunc(Actions.errorFeed, dispatch));
 };
 
-export const fetchComments = ({feedIndex, beforeTimeStamp, postId}) => (dispatch) => {
+export const fetchComments = ({feedIndex, nextPageUrl = null, postId}) => (dispatch) => {
     // TODO: add pagination logic
-	dispatch(Actions.requestComment({}));
+	dispatch(Actions.requestComments({nextPageUrl}));
 	dispatch(Actions.incrementAPICount({}));
-	const url = `${Gen.getBaseUrl()}/v1/comments?postId=${postId}`;
+    const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/comments`;
 	return fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            return response.json();
+        })
         .then(paginatedComments => {
 	Gen.log(paginatedComments);
 	dispatch(Actions.decrementAPICount({}));
-	dispatch(Actions.receiveComments({feedIndex, beforeTimeStamp, paginatedComments}));
+	dispatch(Actions.receiveComments({feedIndex, nextPageUrl, paginatedComments}));
 })
         .catch(errorFunc(Actions.errorComments, dispatch));
 };
