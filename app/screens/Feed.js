@@ -8,7 +8,6 @@ import {
   ScrollView,
   FlatList
 } from 'react-native';
-import { users } from '../config/data';
 
 class FeedScreenElements extends Component {
   componentDidMount() {

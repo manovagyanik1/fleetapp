@@ -8,7 +8,6 @@ import {
     StyleSheet,
   FlatList,
 } from 'react-native';
-import {users} from '../config/data';
 import Gen from '../utils/gen';
 import CommentCard from '../components/commentCard';
 import CommentForm from '../components/commentForm';
