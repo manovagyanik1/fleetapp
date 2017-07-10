@@ -9,18 +9,18 @@ const errorFunc = (errorAction, dispatch) => (err) => {
 };
 
 // TODO: implement afterTimeStamp
-export const fetchFeed = ({beforeTimeStamp = null}) =>
+export const fetchFeed = ({nextPageUrl = null}) =>
     (dispatch) => {
         // TODO: add pagination logic
-	dispatch(Actions.requestFeed({beforeTimeStamp}));
+	dispatch(Actions.requestFeed({nextPageUrl}));
 	dispatch(Actions.incrementAPICount({}));
-	const url = `${Gen.getBaseUrl()}/v1/feed`;
+	const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/feed`;
 	return fetch(url)
             .then(response => response.json())
             .then((paginatedPosts) => {
 	Gen.log(paginatedPosts);
 	dispatch(Actions.decrementAPICount({}));
-	dispatch(Actions.receiveFeed({beforeTimeStamp, paginatedPosts}));
+	dispatch(Actions.receiveFeed({nextPageUrl, paginatedPosts}));
 })
             .catch(errorFunc(Actions.errorFeed, dispatch));
 };

@@ -20,11 +20,17 @@ class FeedScreenElements extends Component {
   };
 
   render() {
-    const {feed: {posts: {results}}, onReactionClick} = this.props;
+    const {feed: {posts}, onReactionClick, onMountDispatch, fetchNextPageFeed} = this.props;
+    const {results} = posts;
+    // implement isFetching. do in request posts.
     return (
             results.length > 0 ?
               <FlatList
                 data={results}
+                refreshing={posts.isFetching === true}
+                onRefresh={() => onMountDispatch()}
+                onEndReachedThreshold={0.5}
+                onEndReached={() => fetchNextPageFeed({nextPageUrl: posts.pageInfo.nextPageUrl})}
                 renderItem={({item, index}) => {
                   return <FeedCard
                     card={item}
@@ -50,6 +56,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
     onMountDispatch: () => {
         dispatch(fetchFeed({}));
+    },
+    fetchNextPageFeed: ({nextPageUrl}) => {
+        dispatch(fetchFeed({nextPageUrl}));
     },
     onReactionClick: ({feedIndex, feedId, reactionType}) => {
         dispatch(fetchFeedReaction({feedIndex, feedId, reactionType}));

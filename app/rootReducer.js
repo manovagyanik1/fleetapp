@@ -13,14 +13,14 @@ const feed = (state = {
 		}}}, action) => {
 	switch (action.type) {
 	case ActionTypes.RECEIVE_FEED: {
-		const {beforeTimeStamp, paginatedPosts: {results, pageInfo}} = action;
+		const {nextPageUrl, paginatedPosts: {results, pageInfo}} = action;
 		const postResults = Gen.merge([...state.posts.results], results);
 		const statePageInfo = {...state.posts.pageInfo};
 		statePageInfo.nextPageUrl = pageInfo.nextPageUrl;
 		return {posts: {results: postResults, pageInfo: statePageInfo}};
 	}
 	case ActionTypes.RECEIVE_COMMENTS: {
-		const {feedIndex, paginatedComments: {results, pageInfo}, beforeTimeStamp} = action;
+		const {feedIndex, paginatedComments: {results, pageInfo}, nextPageUrl} = action;
 		const commentResults = state.posts.results[feedIndex].comments ? Gen.merge([...state.posts.results[feedIndex].comments.results], results) : results;
 		const statePageInfo = state.posts.results[feedIndex].comments ? {...state.posts.results[feedIndex].comments.pageInfo} : {};
 		statePageInfo.nextPageUrl = pageInfo.nextPageUrl;

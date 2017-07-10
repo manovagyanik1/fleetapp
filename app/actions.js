@@ -56,28 +56,28 @@ export class Actions {
         type: ActionTypes.ERROR_COMMENTS,
     });
 
-    static requestFeed = ({beforeTimeStamp}) => ({
-        beforeTimeStamp,
+    static requestFeed = ({nextPageUrl}) => ({
+        nextPageUrl,
         type: ActionTypes.REQUEST_FEED
     });
 
-    static requestComment = ({beforeTimeStamp}) => ({
-        beforeTimeStamp,
+    static requestComment = ({nextPageUrl}) => ({
+        nextPageUrl,
         type: ActionTypes.REQUEST_COMMENTS
     });
 
-    static receiveFeed = ({beforeTimeStamp, paginatedPosts}) => {
+    static receiveFeed = ({nextPageUrl, paginatedPosts}) => {
         return {
-            beforeTimeStamp,
+            nextPageUrl,
             paginatedPosts,
             type: ActionTypes.RECEIVE_FEED
         }
     };
 
-    static receiveComments = ({feedIndex, beforeTimeStamp, paginatedComments}) => {
+    static receiveComments = ({feedIndex, nextPageUrl, paginatedComments}) => {
         return {
             feedIndex,
-            beforeTimeStamp,
+            nextPageUrl,
             paginatedComments,
             type: ActionTypes.RECEIVE_COMMENTS
         }
