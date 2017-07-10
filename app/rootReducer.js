@@ -29,6 +29,13 @@ const feed = (state = {
 		newState.posts.results[feedIndex].comments = comments;
 		return newState;
 	}
+    case ActionTypes.RECEIVE_COMMENT: {
+        const {feedIndex, postId, comment} = action;\
+        const newState = Gen.deepClone(state);
+        const commentResults = newState.posts.results[feedIndex].comments ? Gen.merge([comment], [...newState.posts.results[feedIndex].comments.results]) : [comment];
+        newState.posts.results[feedIndex].comments.results = commentResults;
+        return newState;
+    }
 	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
 		const {feedIndex, commentIndex} = action;
 		const newState = Gen.deepClone(state);

@@ -21,6 +21,9 @@ export const ActionTypes = {
     RECEIVE_COMMENT_USER_DEREACTION: "receive_comment_user_dereaction",
     REQUEST_SHARE: "request_share",
     RECEIVE_SHARE: "receive_share",
+    REQUEST_COMMENT: "request_comment",
+    RECEIVE_COMMENT: "receive_comment",
+    ERROR_COMMENT: "error_comment",
 };
 
 export class Actions {
@@ -43,6 +46,10 @@ export class Actions {
 
     static errorPostUserReaction = () => ({
         type: ActionTypes.ERROR_POST_USER_REACTION,
+    });
+
+    static errorComment = () => ({
+        type: ActionTypes.ERROR_COMMENT,
     });
 
     static errorComments = () => ({
@@ -115,5 +122,21 @@ export class Actions {
         }
     };
 
+    static requestComment = ({feedIndex, text, postId}) => {
+        return {
+            feedIndex,
+            postId,
+            text,
+            type: ActionTypes.REQUEST_COMMENT
+        }
+    };
 
+    static receiveComment = ({feedIndex, comment, postId}) => {
+        return {
+            feedIndex,
+            postId,
+            comment,
+            type: ActionTypes.RECEIVE_COMMENT
+        }
+    };
 }

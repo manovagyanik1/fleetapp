@@ -57,9 +57,7 @@ export const fetchCommentReaction = ({feedIndex, commentIndex, commentId, reacti
 		},
 		body: JSON.stringify(postData),
 	})
-        .then(response => {
-            return response.json();
-        })
+        .then(response => response.json())
         .then(comment => {
 	Gen.log(comment);
 	dispatch(Actions.decrementAPICount());
@@ -69,29 +67,53 @@ export const fetchCommentReaction = ({feedIndex, commentIndex, commentId, reacti
 };
 
 export const fetchFeedReaction = ({feedIndex, feedId, reactionType}) => (dispatch) => {
-    dispatch(Actions.requestPostUserReaction({feedIndex, feedId, reactionType}));
-    dispatch(Actions.incrementAPICount({}));
-    const url = `${Gen.getBaseUrl()}/v1/user-reaction`;
-    const postData = {
-        targetId: feedId,
-        reaction: reactionType,
-        type: Constants.CONTENT_TYPE.POST,
-    };
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-    })
-        .then(response => {
-            return response.json();
-        })
+	dispatch(Actions.requestPostUserReaction({feedIndex, feedId, reactionType}));
+	dispatch(Actions.incrementAPICount({}));
+	const url = `${Gen.getBaseUrl()}/v1/user-reaction`;
+	const postData = {
+		targetId: feedId,
+		reaction: reactionType,
+		type: Constants.CONTENT_TYPE.POST,
+	};
+	return fetch(url, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(postData),
+	})
+        .then(response => response.json())
         .then(comment => {
-            Gen.log(comment);
-            dispatch(Actions.decrementAPICount());
-            dispatch(Actions.receivePostUserReaction({feedIndex, feedId, comment}));
-        })
+	Gen.log(comment);
+	dispatch(Actions.decrementAPICount());
+	dispatch(Actions.receivePostUserReaction({feedIndex, feedId, comment}));
+})
         .catch(errorFunc(Actions.errorPostUserReaction(), dispatch));
 };
+
+export const fetchComment = ({feedIndex, postId, text}) => (dispatch) => {
+	dispatch(Actions.requestComment({feedIndex, postId, text}));
+	dispatch(Actions.incrementAPICount({}));
+	const url = `${Gen.getBaseUrl()}/v1/comment`;
+	const postData = {
+		postId,
+		text,
+	};
+	return fetch(url, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(postData),
+	})
+        .then(response => response.json())
+        .then(comment => {
+	Gen.log(comment);
+	dispatch(Actions.decrementAPICount());
+	dispatch(Actions.receiveComment({feedIndex, postId, comment}));
+})
+        .catch(errorFunc(Actions.errorComment(), dispatch));
+};
+
