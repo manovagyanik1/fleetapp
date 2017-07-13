@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Dimensions, TouchableHighlight
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import * as Constants from '../constants';
 
 const styles = StyleSheet.create({
@@ -24,20 +23,24 @@ const styles = StyleSheet.create({
       height: 4
     }
   },
+    icon: {
+        height: 30,
+        width:30,
+        marginRight: 5,
+        marginLeft: 5,
+    },
     cardFooter: {
     flex: 1,
     flexDirection: "row",
     height: 64,
     alignItems: "center",
     justifyContent: 'space-around',
-    backgroundColor: "#c5c5c5"
+    backgroundColor: "#fff"
     },
     reactionContainer: {
       flex: 1,
         flexDirection: "row",
     },
-  icon: {},
-  share: {}
 });
 
 class FeedCard extends Component {
@@ -67,24 +70,24 @@ class FeedCard extends Component {
         return (
           <View style={styles.cardFooter}>
               <View style={styles.reactionContainer}>
-                    <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
-                      <Icon name="heart-o" size={20} color="#000" style={styles.icon}/>
-                    </TouchableHighlight>
                   <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})}>
-                      <Icon name="heart-o" size={20} color="#000" style={styles.icon}/>
+                      <Image style={styles.icon} source={require('../img/laugh.png')}/>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})}>
+                      <Image style={styles.icon} source={require('../img/haha.png')}/>
                   </TouchableHighlight>
                   <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
-                      <Icon name="heart-o" size={20} color="#000" style={styles.icon}/>
+                      <Image style={styles.icon} source={require('../img/wow.png')}/>
                   </TouchableHighlight>
                   <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.CLAP})}>
-                      <Icon name="heart-o" size={20} color="#000" style={styles.icon}/>
+                      <Image style={styles.icon} source={require('../img/clap.png')}/>
                   </TouchableHighlight>
               </View>
             <TouchableHighlight onPress={() => onCommentClick(data.id)}>
-              <Icon name="comment" size={20} color="#000" style={styles.icon}/>
+                <Image style={styles.icon} source={require('../img/comment.png')}/>
             </TouchableHighlight>
             <TouchableHighlight onPress={() => onShareClick(data.id)}>
-              <Icon name="share" size={20} color="#000" style={styles.share}/>
+                <Image style={styles.icon} source={require('../img/share.png')}/>
             </TouchableHighlight>
           </View>
         );

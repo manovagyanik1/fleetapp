@@ -17,15 +17,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 	},
-	commentList: {
-	    flex: 1,
-		flexGrow: 1,
-	},
-	commentPost: {
-	    flex: 0,
-		flexShrink: 1,
-		maxHeight: 40,
-	},
 });
 
 class CommentsScreenElements extends Component {

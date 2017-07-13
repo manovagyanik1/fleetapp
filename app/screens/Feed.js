@@ -6,8 +6,16 @@ import {
   Text,
   View,
   ScrollView,
-  FlatList
+  FlatList,
+    StyleSheet,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#999DA4",
+    }
+});
+
 
 class FeedScreenElements extends Component {
   componentDidMount() {
@@ -26,6 +34,7 @@ class FeedScreenElements extends Component {
             results.length > 0 ?
               <FlatList
                 data={results}
+                style={styles.container}
                 refreshing={posts.isFetching === true}
                 onRefresh={() => onMountDispatch()}
                 onEndReachedThreshold={0.5}
