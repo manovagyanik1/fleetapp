@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     shareCommentContainer: {
       flex: 0.4,
         flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
+        marginTop: 5,
     },
     emptyView: {
       flex: 1,
