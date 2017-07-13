@@ -26,7 +26,7 @@ export default class Gen {
             displayTime = diff > 1 ? diff + ' seconds ago' : '1 second ago';
         }
         diff = Math.floor(diff/60);
-        if(diff > 0) {gs
+        if(diff > 0) {
             displayTime =diff > 1 ? diff + ' minutes ago' : '1 minute ago';
         }
         diff = Math.floor(diff/60);

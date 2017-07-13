@@ -17,6 +17,18 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 	},
+	commentList: {
+	    flex: 1,
+        marginBottom: 50,
+	},
+	commentPost: {
+        position: 'absolute',
+        flex:0.1,
+        left: 0,
+        right: 0,
+        bottom: 10,
+        height: 40,
+	},
 });
 
 class CommentsScreenElements extends Component {
@@ -31,24 +43,26 @@ class CommentsScreenElements extends Component {
 		return (
           results.length > 0 ?
 	<View style={styles.container}>
-		<FlatList
-			data={results}
-			refreshing={comments.isFetching === true}
-			onRefresh={() => onMountDispatch()}
-			onEndReachedThreshold={0.5}
-			onEndReached={() => fetchNextComments({nextPageUrl: comments.pageInfo.nextPageUrl})}
-			style={styles.commentList}
-			removeClippedSubviews={false}
-			renderItem={({item, index}) => (<CommentCard
-				card={item}
-				onProfileClick={onProfileClick}
-				onLikeClick={onLikeClick}
-				feedIndex={feedIndex}
-				commentIndex={index}
-			/>)}
-			keyExtractor={(card, index) => index}
-		/>
-		<CommentForm style={styles.commentPost} feedIndex={feedIndex} postId={postId} onCommentPost={(data) => onCommentPost(data)} />
+			<FlatList
+				data={results}
+				refreshing={comments.isFetching === true}
+				onRefresh={() => onMountDispatch()}
+				onEndReachedThreshold={0.5}
+				onEndReached={() => fetchNextComments({nextPageUrl: comments.pageInfo.nextPageUrl})}
+				style={styles.commentList}
+				removeClippedSubviews={false}
+				renderItem={({item, index}) => (<CommentCard
+					card={item}
+					onProfileClick={onProfileClick}
+					onLikeClick={onLikeClick}
+					feedIndex={feedIndex}
+					commentIndex={index}
+				/>)}
+				keyExtractor={(card, index) => index}
+			/>
+        <View style={styles.commentPost}>
+            <CommentForm style={styles.commentPost} feedIndex={feedIndex} postId={postId} onCommentPost={(data) => onCommentPost(data)} />
+        </View>
 	</View>
               : null
 		);
@@ -70,9 +84,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		onMountDispatch: () => {
 			dispatch(fetchComments({feedIndex: index}));
 		},
-        fetchNextComments: ({nextPageUrl}) => {
-            dispatch(fetchComments({nextPageUrl}));
-        },
+		fetchNextComments: ({nextPageUrl}) => {
+			dispatch(fetchComments({nextPageUrl}));
+		},
 		onLikeClick: ({feedIndex, commentIndex, commentId, reactionType}) => {
 		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId, reactionType}));
 		},

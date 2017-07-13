@@ -14,6 +14,7 @@ import Gen from '../utils/gen';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+        padding: 10,
 		marginBottom: 15,
 		elevation: 4,
 		backgroundColor: '#FFFFFF',
@@ -26,13 +27,21 @@ const styles = StyleSheet.create({
 		},
 	},
     bottomContainer: {
+	    marginLeft: 50,
+        marginTop: 10,
 		flex: 1,
 		flexDirection: 'row',
-		height: 64,
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		backgroundColor: '#c5c5c5',
 	},
+    commentText: {
+	  marginLeft: 50,
+        fontSize: 16,
+        marginTop: 10,
+    },
+    userLikeCount: {
+	    marginLeft: 8,
+	    fontSize: 12,
+    },
 	icon: {},
 	share: {},
 });
@@ -47,17 +56,16 @@ class CommentCard extends Component {
 		const {postId, _id, text, currentUserReaction, userReaction, createdAt, user: {_id: userId, displayName, imageUrl}} = data;
 		const userReactionCount = Gen.getUserReactionCount({type: 'LIKE', userReaction});
 		const time = Gen.getDisplayTime(createdAt);
-		// TODO: add userlike count
         // TODO: add currentUserReaction effect on like
 		return (
 			<View style={styles.container}>
 				<CommentProfileHeader name={displayName} url={imageUrl} onProfileClick={onProfileClick} time={time} />
-				<Text>{text}</Text>
+				<Text style={styles.commentText}>{text}</Text>
 				<View style={styles.bottomContainer}>
 					<TouchableHighlight onPress={() => this.props.onLikeClick({feedIndex, commentIndex, commentId: data['_id'], reactionType: 'LIKE'})}>
 						<Icon name='thumbs-up' size={20} color='#000' style={styles.icon} />
 					</TouchableHighlight>
-					<Text>{userReactionCount}</Text>
+					<Text style={styles.userLikeCount}>{userReactionCount}</Text>
 				</View>
 			</View>
 		);
