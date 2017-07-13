@@ -8,6 +8,7 @@ import {
   Dimensions, TouchableHighlight
 } from "react-native";
 import * as Constants from '../constants';
+import ReactionAndCount from "./reactionAndCount";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,24 +24,29 @@ const styles = StyleSheet.create({
       height: 4
     }
   },
-    icon: {
-        height: 30,
-        width:30,
-        marginRight: 5,
-        marginLeft: 5,
-    },
     cardFooter: {
-    flex: 1,
-    flexDirection: "row",
-    height: 64,
-    alignItems: "center",
-    justifyContent: 'space-around',
-    backgroundColor: "#fff"
-    },
-    reactionContainer: {
-      flex: 1,
+        flex: 1,
         flexDirection: "row",
+        height: 64,
+        alignItems: "center",
+        justifyContent: 'space-between',
+        backgroundColor: "#fff"
     },
+    reactionsContainer: {
+      flex: 0.6,
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+    },
+    shareCommentContainer: {
+      flex: 0.4,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
+    emptyView: {
+      flex: 1,
+    }
 });
 
 class FeedCard extends Component {
@@ -65,30 +71,39 @@ class FeedCard extends Component {
     const feedId = data[Constants.ID];
     const {imgWidth, imgHeight} = this.state;
     const {onReactionClick, onCommentClick, onShareClick, feedIndex} = this.props;
+    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}} = data;
     const getFooter = () => {
       if (imgHeight > 0) {
         return (
           <View style={styles.cardFooter}>
-              <View style={styles.reactionContainer}>
-                  <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})}>
-                      <Image style={styles.icon} source={require('../img/laugh.png')}/>
-                  </TouchableHighlight>
-                  <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})}>
-                      <Image style={styles.icon} source={require('../img/haha.png')}/>
-                  </TouchableHighlight>
-                  <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
-                      <Image style={styles.icon} source={require('../img/wow.png')}/>
-                  </TouchableHighlight>
-                  <TouchableHighlight onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.CLAP})}>
-                      <Image style={styles.icon} source={require('../img/clap.png')}/>
-                  </TouchableHighlight>
+              <View style={styles.reactionsContainer}>
+                  <ReactionAndCount
+                      imageSource={require('../img/lol.png')}
+                      reactionCount={LOL}
+                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})} />
+                  <ReactionAndCount
+                      imageSource={require('../img/haha.png')}
+                      reactionCount={HAHA}
+                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})} />
+                  <ReactionAndCount
+                      imageSource={require('../img/wow.png')}
+                      reactionCount={WOW}
+                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})} />
+                  <ReactionAndCount
+                      imageSource={require('../img/clap.png')}
+                      reactionCount={CLAP}
+                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.CLAP})} />
               </View>
-            <TouchableHighlight onPress={() => onCommentClick(data.id)}>
-                <Image style={styles.icon} source={require('../img/comment.png')}/>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={() => onShareClick(data.id)}>
-                <Image style={styles.icon} source={require('../img/share.png')}/>
-            </TouchableHighlight>
+              <View style={styles.emptyView} />
+              <View style={styles.shareCommentContainer}>
+                  <ReactionAndCount
+                      imageSource={require('../img/comment.png')}
+                      reactionCount={COMMENT}
+                      onReactionClick={() => onCommentClick(data.id)} />
+                  <ReactionAndCount
+                      imageSource={require('../img/share.png')}
+                      onReactionClick={() => console.log('share clicked!')} />
+              </View>
           </View>
         );
       }
