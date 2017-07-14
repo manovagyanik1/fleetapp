@@ -47,11 +47,22 @@ const styles = StyleSheet.create({
 	},
 });
 class Login extends Component {
-	navigateToFeedPage() {
+	navigateToFeedPage = () => {
 		this.props.navigation.navigate('Feed');
 	}
 
-	fbAuth() {
+    // returns a promise
+    getLoginToken = (accessToken) => {
+        const url = `${Gen.getBaseUrl()}/v1/login/callback?code=${accessToken}`;
+        return fetch(url)
+            .then(data => data.json())
+            .then(data => {
+                return data.token;
+            })
+            .then(token => Gen.onSignIn(token));
+    }
+
+	fbAuth = () => {
 		LoginManager.logInWithReadPermissions(['public_profile'])
                     .then((result) => {
 	if (result.isCancelled) {
@@ -68,13 +79,6 @@ class Login extends Component {
 });
 	}
 
-	// returns a promise
-	getLoginToken(accessToken) {
-	    const url = `${Gen.getBaseUrl()}/v1/login/callback?code=${accessToken}`;
-		return fetch(url)
-            .then(data => data.token)
-            .then(token => Gen.onSignIn(token));
-	}
 
 	render() {
 		return (

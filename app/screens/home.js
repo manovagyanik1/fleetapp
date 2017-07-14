@@ -28,8 +28,8 @@ export default class App extends Component {
 		}
 
 		if (signedIn) {
-			return <Feed />;
+			return <Feed navigation={this.props.navigation}/>;
 		}
-		return <Login />;
+		return <Login navigation={this.props.navigation} />;
 	}
 }
