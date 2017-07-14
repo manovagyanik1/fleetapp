@@ -5,32 +5,24 @@ import Feed from '../screens/Feed';
 import Comments from '../screens/comments';
 import Login from '../screens/login';
 
-export const FeedStack = StackNavigator({
-    Login: {
-        screen: Login,
-        navigationOptions: {
-            title: 'Login',
-        },
-    },
-    Feed: {
-        screen: Feed,
-        navigationOptions: {
-            title: 'Feed',
-        },
-    },
-    Comments: {
-        screen: Comments,
-        navigationOptions: ({navigation}) => ({
-            title: 'Comments',
-        }),
-    },
-});
-
 export const Root = StackNavigator({
-    Tabs: {
-        screen: FeedStack,
-    },
+	Login: {
+		screen: Login,
+        header: null,
+	},
+	Feed: {
+		screen: Feed,
+		navigationOptions: {
+			title: 'Feed',
+		},
+	},
+	Comments: {
+		screen: Comments,
+		navigationOptions: ({navigation}) => ({
+			title: 'Comments',
+		}),
+	},
 }, {
-    mode: 'modal',
     headerMode: 'none',
 });
+
