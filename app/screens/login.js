@@ -1,9 +1,8 @@
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchFeed, fetchFeedReaction} from '../thunks';
 import {Text, View, Image, ScrollView, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
-import FBSDK, {LoginManager} from 'react-native-fbsdk';
+import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Carousel from 'react-native-looped-carousel';
 import Gen from '../utils/gen';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -47,10 +46,9 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 });
-class LoginScreenElements extends Component {
-
-	componentDidMount() {
-		this.props.onMountDispatch();
+class Login extends Component {
+	navigateToFeedPage() {
+		this.props.navigation.navigate('Feed');
 	}
 
 	fbAuth() {
@@ -59,11 +57,23 @@ class LoginScreenElements extends Component {
 	if (result.isCancelled) {
 		Gen.log('login was cancelled');
 	} else {
+		AccessToken.getCurrentAccessToken()
+                .then(data => this.getLoginToken(data.accessToken))
+                .then(() => this.navigateToFeedPage());
+
 		Gen.log(`login was success ${result.grantedPermissions.toString()}`);
 	}
 }, (error) => {
 	Gen.log(`An error occured ${error}`);
 });
+	}
+
+	// returns a promise
+	getLoginToken(accessToken) {
+	    const url = `${Gen.getBaseUrl()}/v1/login/callback?code=${accessToken}`;
+		return fetch(url)
+            .then(data => data.token)
+            .then(token => Gen.onSignIn(token));
 	}
 
 	render() {
@@ -91,18 +101,5 @@ class LoginScreenElements extends Component {
 		);
 	}
 }
-
-const mapStateToProps = (state, ownProps) => ({
-	feed: state.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	onMountDispatch: () => {
-		dispatch(fetchFeed({}));
-	},
-});
-
-
-const Login = connect(mapStateToProps, mapDispatchToProps)(LoginScreenElements);
 
 export default Login;

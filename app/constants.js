@@ -19,3 +19,4 @@ export const CONTENT_TYPE = {
 }
 
 export const ID = '_id';
+export const USER_TOKEN = 'token';
