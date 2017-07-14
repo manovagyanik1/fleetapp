@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {fetchFeed, fetchFeedReaction} from '../thunks';
 import {Text, View, Image, ScrollView, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {NavigationActions} from 'react-navigation';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Carousel from 'react-native-looped-carousel';
 import Gen from '../utils/gen';
@@ -48,7 +47,11 @@ const styles = StyleSheet.create({
 });
 class Login extends Component {
 	navigateToFeedPage = () => {
-		this.props.navigation.navigate('Feed');
+        const actionToDispatch = NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({routeName: 'Feed'})]
+        })
+        this.props.navigation.dispatch(actionToDispatch);
 	}
 
     // returns a promise
