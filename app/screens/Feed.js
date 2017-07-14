@@ -6,9 +6,14 @@ import {
   Text,
   View,
   ScrollView,
+    ImageEditor,
+    Image,
+    ImageStore,
   FlatList,
     StyleSheet,
 } from 'react-native';
+import Gen from "../utils/gen";
+
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +30,11 @@ class FeedScreenElements extends Component {
   onCommentClick = (index) => {
     this.props.navigation.navigate('Comments', {index});
   };
+
+  onShareClick = ({feedIndex, feedId, url}) => {
+      Gen.shareImage(url);
+      // TODO: make api calls to backend to update share count
+  }
 
   render() {
     const {feed: {posts}, onReactionClick, onMountDispatch, fetchNextPageFeed} = this.props;
@@ -45,7 +55,7 @@ class FeedScreenElements extends Component {
                     onCommentClick={() => this.onCommentClick(index)}
                     onReactionClick={({feedIndex, feedId, reactionType}) => onReactionClick({feedIndex, feedId, reactionType})}
                     feedIndex={index}
-                    onShareClick={() => console.log("share clicked")}
+                    onShareClick={(data) => this.onShareClick(data)}
                   />
       }}
       keyExtractor={(card, index) => index}

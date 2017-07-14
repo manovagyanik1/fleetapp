@@ -1,5 +1,8 @@
 import {AsyncStorage} from 'react-native';
-import {USER_TOKEN} from '../constants';
+import {USER_TOKEN, PLAY_STORE_URL} from '../constants';
+import Share, {ShareSheet, Button} from 'react-native-share';
+import RNFetchBlob from 'react-native-fetch-blob';
+const fs = RNFetchBlob.fs;
 
 export default class Gen {
 
@@ -111,4 +114,30 @@ export default class Gen {
 	static onSignOut() {
 		return AsyncStorage.removeItem(USER_TOKEN);
 	}
+
+	// TODO: fix this for facebook messenger, right as of now it is only sharing image and no desc.
+	static shareImage(url) {
+		let imagePath = null;
+		RNFetchBlob
+            .config({
+                fileCache: true,
+            })
+            .fetch('GET', url)
+            .then((resp) => {
+                imagePath = resp.path();
+                return resp.readFile('base64');
+            })
+            .then((base64Data) => {
+		    // TODO: as of now we are hard-coding jpeg image. If the image is png, this is a problem
+                base64Data = `data:image/jpeg;base64,${base64Data}`;
+                Share.open({url: base64Data,
+                    message: PLAY_STORE_URL})
+                    .catch((err) => { err && Gen.log(err); });
+                return fs.unlink(imagePath);
+});
+	}
+
+	static getFileFormat(file) {
+
+    }
 }

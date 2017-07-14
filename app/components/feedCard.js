@@ -70,7 +70,7 @@ class FeedCard extends Component {
     const feedId = data[Constants.ID];
     const {imgWidth, imgHeight} = this.state;
     const {onReactionClick, onCommentClick, onShareClick, feedIndex} = this.props;
-    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}} = data;
+    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}, url} = data;
     const getFooter = () => {
       if (imgHeight > 0) {
         return (
@@ -101,7 +101,7 @@ class FeedCard extends Component {
                       onReactionClick={() => onCommentClick(data.id)} />
                   <ReactionAndCount
                       imageSource={require('../img/share.png')}
-                      onReactionClick={() => console.log('share clicked!')} />
+                      onReactionClick={() => onShareClick({feedIndex, feedId, url, imgWidth, imgHeight})} />
               </View>
           </View>
         );
