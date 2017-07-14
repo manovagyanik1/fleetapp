@@ -1,7 +1,7 @@
 import React from 'react';
 import {TabNavigator, StackNavigator} from 'react-navigation';
 import {Icon} from 'react-native-elements';
-import Feed from '../screens/feed';
+import Feed from '../screens/Feed';
 import Comments from '../screens/comments';
 import Login from '../screens/login';
 
