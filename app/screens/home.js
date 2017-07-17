@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Gen from '../utils/gen';
 import Feed from './Feed';
 import Login from './login';
+import Splash from './splash';
 
-export default class App extends Component {
+export default class Home extends Component {
 	constructor(props) {
 		super(props);
 
@@ -24,7 +25,7 @@ export default class App extends Component {
 
         // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
 		if (!checkedSignIn) {
-			return null;
+			return <Splash/>;
 		}
 
 		if (signedIn) {

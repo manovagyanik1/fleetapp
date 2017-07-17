@@ -13,6 +13,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import Gen from "../utils/gen";
+import Splash from './splash';
 
 
 const styles = StyleSheet.create({
@@ -60,7 +61,7 @@ class FeedScreenElements extends Component {
       }}
       keyExtractor={(card, index) => index}
     />
-            : null
+            : <Splash/>
       );
   }
 }
