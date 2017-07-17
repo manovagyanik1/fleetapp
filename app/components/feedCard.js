@@ -56,6 +56,7 @@ class FeedCard extends Component {
 
   componentDidMount() {
     const data = this.props.card;
+    // TODO: use our api itself
     Image.getSize(data.url, (width, height) => {
       // calculate image width and height
       const screenWidth = Dimensions.get('window').width;
