@@ -6,6 +6,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import cl.json.RNSharePackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -42,6 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new GoogleAnalyticsBridgePackage(),
             new RNFetchBlobPackage(),
             new RNSharePackage(),
               new FBSDKPackage(mCallbackManager)

@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native';
-import {USER_TOKEN, PLAY_STORE_URL} from '../constants';
+import {USER_TOKEN, PLAY_STORE_URL, USER_ID} from '../constants';
 import Share, {ShareSheet, Button} from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob';
 const fs = RNFetchBlob.fs;
@@ -107,8 +107,8 @@ export default class Gen {
 		});
 	}
 
-	static onSignIn(userToken) {
-		return AsyncStorage.setItem(USER_TOKEN, userToken);
+	static onSignIn({userToken, userId}) {
+	    return Promise.all([AsyncStorage.setItem(USER_ID, userId), AsyncStorage.setItem(USER_TOKEN, userToken)]);
 	}
 
 	static onSignOut() {
@@ -139,5 +139,19 @@ export default class Gen {
 
 	static getFileFormat(file) {
 
+    }
+
+    static getUserId() {
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(USER_ID)
+                .then(res => {
+                    if (res !== null) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                })
+                .catch(err => reject(err));
+        });
     }
 }
