@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     textHeaderLeft: {
         fontSize: 20,
         color: '#CCCC00',
-        fontWeight: '100',
+        fontWeight: '900',
         fontFamily: 'Roboto-Black',
     },
     textHeaderCenter: {

@@ -9,6 +9,7 @@ import {
     FlatList,
     StyleSheet,
 } from 'react-native';
+import FeedHeader from "../components/feedHeader";
 
 const styles = StyleSheet.create({
 	container: {
@@ -30,7 +31,7 @@ export default class Splash extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.title}>LolMeNow</Text>
+                <FeedHeader/>
 			</View>);
 	}
 }
