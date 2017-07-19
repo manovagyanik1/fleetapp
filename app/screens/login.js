@@ -52,7 +52,7 @@ class Login extends Component {
             actions: [NavigationActions.navigate({routeName: 'Feed'})]
         })
         this.props.navigation.dispatch(actionToDispatch);
-	}
+	};
 
     // returns a promise
     getLoginToken = (accessToken) => {

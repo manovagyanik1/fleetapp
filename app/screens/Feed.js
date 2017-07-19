@@ -14,10 +14,26 @@ import {
 } from 'react-native';
 import Gen from "../utils/gen";
 import Splash from './splash';
+import FeedHeader from "../components/feedHeader";
 
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'rgba(0,0,0,0)',
+    },
+    feedHeader: {
+        justifyContent: 'center',
+        position: 'absolute',
+        width: '100%',
+        backgroundColor: 'rgba(255,255,255,0.85)',
+        height: 40,
+    },
+    feedHeaderPlaceholder: {
+        width: '100%',
+        backgroundColor: '#fff',
+        height: 40,
+    },
+    feedContainer: {
         backgroundColor: "#999DA4",
     }
 });
@@ -43,9 +59,11 @@ class FeedScreenElements extends Component {
     // implement isFetching. do in request posts.
     return (
             results.length > 0 ?
+            <View style={styles.container}>
               <FlatList
                 data={results}
-                style={styles.container}
+                ListHeaderComponent={() => <View style={styles.feedHeaderPlaceholder}/>}
+                style={styles.feedContainer}
                 refreshing={posts.isFetching === true}
                 onRefresh={() => onMountDispatch()}
                 onEndReachedThreshold={0.5}
@@ -61,6 +79,10 @@ class FeedScreenElements extends Component {
       }}
       keyExtractor={(card, index) => index}
     />
+                <View style={styles.feedHeader}>
+                    <FeedHeader />
+                </View>
+                </View>
             : <Splash/>
       );
   }
