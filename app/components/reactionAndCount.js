@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropType from 'prop-types';
-import * as Animatable from 'react-native-animatable';
 import {
     Text,
     View,
@@ -35,11 +34,11 @@ class ReactionAndCount extends Component {
 	render() {
 		const {imageSource, reactionCount, onReactionClick} = this.props;
 		return (
-			<TouchableWithoutFeedback onPress={() => this.refs.view.bounceInDown(800).then((endState) => onReactionClick())}>
-				<Animatable.View ref="view" style={styles.container}>
+			<TouchableWithoutFeedback onPress={() => onReactionClick()}>
+				<View style={styles.container}>
 					<Image style={styles.icon} source={imageSource} />
 					{reactionCount !== undefined && reactionCount !== null ? <Text style={styles.reactionCount}>{reactionCount}</Text> : null }
-				</Animatable.View>
+				</View>
 			</TouchableWithoutFeedback>
 		);
 	}

@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -14,7 +16,6 @@
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.3",
-    "react-native-animatable": "^1.2.2",
     "react-native-elements": "^0.9.7",
     "react-native-fbsdk": "^0.5.1",
     "react-native-fetch-blob": "^0.10.6",
