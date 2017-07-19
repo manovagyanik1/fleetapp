@@ -6,10 +6,12 @@ import {
   Text,
     StatusBar,
   StyleSheet,
+    TouchableWithoutFeedback,
   Dimensions, TouchableHighlight
 } from "react-native";
 import * as Constants from '../constants';
 import ReactionAndCount from "./reactionAndCount";
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,18 +36,38 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff"
     },
     reactionsContainer: {
-      flex: 0.6,
+      flex: 1,
         flexDirection: "row",
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        marginRight: 20,
+        marginLeft: 20,
     },
     shareCommentContainer: {
-      flex: 0.4,
+      flex: 0.3,
         flexDirection: 'row',
         marginTop: 5,
+        justifyContent: 'space-between',
+        marginRight: 20,
+        marginLeft: 40,
     },
-    emptyView: {
+    reactionIndicator: {
       flex: 1,
+        height: 15,
+        borderRadius: 10,
+    },
+    icon: {
+        height: 25,
+        width: 25,
+    },
+    negativeRightMargin: {
+      marginRight: -10,
+    },
+    negativeLeftMargin: {
+      marginLeft: -10,
+    },
+    rightMargin: {
+      marginRight: 10,
     }
 });
 
@@ -67,36 +89,56 @@ class FeedCard extends Component {
     })
   }
 
+    getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId}) => {
+      if (currentUserReaction) {
+          return (
+          <View style={styles.reactionsContainer}>
+              <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
+                  <Image style={[styles.icon, styles.negativeRightMargin]} source={require('../img/lol.png')} />
+              </TouchableWithoutFeedback>
+
+              <LinearGradient
+                  start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
+                  locations={[0.3, 0.3,1]}
+                  colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
+
+              <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                  <Image style={[styles.icon, styles.negativeLeftMargin]} source={require('../img/poop.png')} />
+              </TouchableWithoutFeedback>
+          </View>);
+      } else {
+          return (
+              <View style={styles.reactionsContainer}>
+                  <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
+                      <Image style={[styles.icon, styles.rightMargin]} source={require('../img/lol.png')} />
+                  </TouchableWithoutFeedback>
+
+                  <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                      <Image style={[styles.icon]} source={require('../img/poop.png')} />
+                  </TouchableWithoutFeedback>
+              </View>);
+      }
+  }
+
   render() {
     const data = this.props.card;
     const feedId = data[Constants.ID];
     const {imgWidth, imgHeight} = this.state;
     const {onReactionClick, onCommentClick, onShareClick, feedIndex} = this.props;
-    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}, url} = data;
+    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}, url, currentUserReaction} = data;
     const getFooter = () => {
       if (imgHeight > 0) {
         return (
           <View style={styles.cardFooter}>
-              <View style={styles.reactionsContainer}>
-                  <ReactionAndCount
-                      imageSource={require('../img/lol.png')}
-                      reactionCount={LOL}
-                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})} />
-
-                  <ReactionAndCount
-                      imageSource={require('../img/poop.png')}
-                      reactionCount={HAHA}
-                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})} />
-              </View>
-              <View style={styles.emptyView} />
+              {this.getReactionContainer({currentUserReaction, onReactionClick, feedIndex, feedId})}
               <View style={styles.shareCommentContainer}>
-                  <ReactionAndCount
-                      imageSource={require('../img/comment.png')}
-                      reactionCount={COMMENT}
-                      onReactionClick={() => onCommentClick(data.id)} />
-                  <ReactionAndCount
-                      imageSource={require('../img/share.png')}
-                      onReactionClick={() => onShareClick({feedIndex, feedId, url, imgWidth, imgHeight})} />
+                  <TouchableWithoutFeedback onPress={() => onCommentClick(data.id)}>
+                      <Image style={styles.icon} source={require('../img/comment.png')} />
+                  </TouchableWithoutFeedback>
+
+                  <TouchableWithoutFeedback onPress={() => onShareClick({feedIndex, feedId, url})}>
+                      <Image style={styles.icon} source={require('../img/whatsapp.png')} />
+                  </TouchableWithoutFeedback>
               </View>
           </View>
         );

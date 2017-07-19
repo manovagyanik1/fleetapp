@@ -10,20 +10,9 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'center',
-		marginLeft: 5,
-		marginRight: 5,
-	},
 	icon: {
-		height: 20,
-		width: 20,
-	},
-	reactionCount: {
-	    fontSize: 14,
-		fontWeight: 'bold',
+		height: 25,
+		width: 25,
 	},
 });
 
@@ -33,12 +22,10 @@ class ReactionAndCount extends Component {
 
 	render() {
 		const {imageSource, reactionCount, onReactionClick} = this.props;
+		// {reactionCount !== undefined && reactionCount !== null ? <Text style={styles.reactionCount}>{reactionCount}</Text> : null }
 		return (
 			<TouchableWithoutFeedback onPress={() => onReactionClick()}>
-				<View style={styles.container}>
-					<Image style={styles.icon} source={imageSource} />
-					{reactionCount !== undefined && reactionCount !== null ? <Text style={styles.reactionCount}>{reactionCount}</Text> : null }
-				</View>
+                <Image style={styles.icon} source={imageSource} />
 			</TouchableWithoutFeedback>
 		);
 	}
