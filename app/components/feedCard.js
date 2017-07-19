@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
     },
     rightMargin: {
       marginRight: 10,
+    },
+    opacity: {
+      opacity: 0.3,
     }
 });
 
@@ -91,21 +94,40 @@ class FeedCard extends Component {
 
     getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId}) => {
       if (currentUserReaction) {
-          return (
-          <View style={styles.reactionsContainer}>
-              <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
-                  <Image style={[styles.icon, styles.negativeRightMargin]} source={require('../img/lol.png')} />
-              </TouchableWithoutFeedback>
+          if(currentUserReaction === 'LOL') {
+              return (
+                  <View style={styles.reactionsContainer}>
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
+                          <Image style={[styles.icon, styles.negativeRightMargin]} source={require('../img/lol.png')} />
+                      </TouchableWithoutFeedback>
 
-              <LinearGradient
-                  start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
-                  locations={[0.3, 0.3,1]}
-                  colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
+                      <LinearGradient
+                          start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
+                          locations={[0.3, 0.3,1]}
+                          colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
-              <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
-                  <Image style={[styles.icon, styles.negativeLeftMargin]} source={require('../img/poop.png')} />
-              </TouchableWithoutFeedback>
-          </View>);
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                          <Image style={[styles.icon, styles.negativeLeftMargin, styles.opacity]} source={require('../img/poop.png')} />
+                      </TouchableWithoutFeedback>
+                  </View>);
+          } else {
+              return (
+                  <View style={styles.reactionsContainer}>
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
+                          <Image style={[styles.icon, styles.negativeRightMargin, styles.opacity]} source={require('../img/lol.png')} />
+                      </TouchableWithoutFeedback>
+
+                      <LinearGradient
+                          start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
+                          locations={[0.3, 0.3,1]}
+                          colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
+
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                          <Image style={[styles.icon, styles.negativeLeftMargin]} source={require('../img/poop.png')} />
+                      </TouchableWithoutFeedback>
+                  </View>);
+          }
+
       } else {
           return (
               <View style={styles.reactionsContainer}>

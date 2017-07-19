@@ -11,6 +11,7 @@ export const REACTION_TYPE = {
     HAHA: 'HAHA',
     WOW: 'WOW',
     CLAP: 'CLAP',
+    POOP: 'POOP',
 }
 
 export const CONTENT_TYPE = {
