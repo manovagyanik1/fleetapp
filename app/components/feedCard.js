@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Text,
+    StatusBar,
   StyleSheet,
   Dimensions, TouchableHighlight
 } from "react-native";
@@ -81,18 +82,11 @@ class FeedCard extends Component {
                       imageSource={require('../img/lol.png')}
                       reactionCount={LOL}
                       onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})} />
+
                   <ReactionAndCount
-                      imageSource={require('../img/haha.png')}
+                      imageSource={require('../img/poop.png')}
                       reactionCount={HAHA}
                       onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})} />
-                  <ReactionAndCount
-                      imageSource={require('../img/wow.png')}
-                      reactionCount={WOW}
-                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.WOW})} />
-                  <ReactionAndCount
-                      imageSource={require('../img/clap.png')}
-                      reactionCount={CLAP}
-                      onReactionClick={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.CLAP})} />
               </View>
               <View style={styles.emptyView} />
               <View style={styles.shareCommentContainer}>
