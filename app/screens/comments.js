@@ -10,6 +10,7 @@ import {
     Dimensions,
   FlatList,
 } from 'react-native';
+import ImageZoom from 'react-native-image-pan-zoom';
 import Gen from '../utils/gen';
 import CommentCard from '../components/commentCard';
 import CommentForm from '../components/commentForm';
@@ -54,11 +55,17 @@ class CommentsScreenElements extends Component {
     getImageCard = () => {
         const {url} = this.props;
         const {imgWidth, imgHeight} = this.state;
-        return (<Image
+        return (
+            <ImageZoom cropWidth={imgWidth}
+                       cropHeight={imgHeight}
+                       imageWidth={imgWidth}
+                       imageHeight={imgHeight}>
+                <Image
             source={{uri: url}}
             style={{height: imgHeight, width: imgWidth}}
             defaultSource={require('../img/placeholder.jpg')}
-        />);
+        />
+            </ImageZoom>);
     }
 
     getCommentPost = ({feedIndex, postId, onCommentPost}) => {
