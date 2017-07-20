@@ -44,14 +44,14 @@ class FeedScreenElements extends Component {
       this.props.onMountDispatch();
   }
 
-  onCommentClick = (index) => {
-    this.props.navigation.navigate('Comments', {index});
+  onCommentClick = ({index, postId}) => {
+    this.props.navigation.navigate('Comments', {index, postId});
   };
 
   onShareClick = ({feedIndex, feedId, url}) => {
       Gen.shareImage(url);
       // TODO: make api calls to backend to update share count
-  }
+  };
 
   render() {
     const {feed: {posts}, onReactionClick, onMountDispatch, fetchNextPageFeed} = this.props;
@@ -71,7 +71,7 @@ class FeedScreenElements extends Component {
                 renderItem={({item, index}) => {
                   return <FeedCard
                     card={item}
-                    onCommentClick={() => this.onCommentClick(index)}
+                    onCommentClick={({postId}) => this.onCommentClick({index, postId})}
                     onReactionClick={({feedIndex, feedId, reactionType}) => onReactionClick({feedIndex, feedId, reactionType})}
                     feedIndex={index}
                     onShareClick={(data) => this.onShareClick(data)}

@@ -81,8 +81,8 @@ export default class Gen {
 		return Array.from(hash.values());
 	}
 
-	static getUserReactionCount({userReaction, type}) {
-		return userReaction ? userReaction[type] : null;
+	static getUserReactionCount({userReactions, type}) {
+		return userReactions ? userReactions[type] : null;
 	}
 
 	static max(a, b) {

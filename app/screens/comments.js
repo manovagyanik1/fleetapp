@@ -35,26 +35,16 @@ const styles = StyleSheet.create({
 });
 
 class CommentsScreenElements extends Component {
-    state = {
-        imgWidth: 0,
-        imgHeight: 0,
-    };
-
     componentDidMount() {
         this.props.onMountDispatch();
-        const {url} = this.props;
-        Image.getSize(url, (width, height) => {
-            // calculate image width and height
-            const screenWidth = Dimensions.get('window').width;
-            const scaleFactor = width / screenWidth;
-            const imageHeight = height / scaleFactor;
-            this.setState({imgWidth: screenWidth, imgHeight: imageHeight})
-        })
     }
 
     getImageCard = () => {
-        const {url} = this.props;
-        const {imgWidth, imgHeight} = this.state;
+        const {url, height, width} = this.props;
+        const imgWidth = Dimensions.get('window').width;
+        const scaleFactor = width / imgWidth;
+        const imgHeight = height / scaleFactor;
+
         return (
             <ImageZoom cropWidth={imgWidth}
                        cropHeight={imgHeight}
@@ -109,8 +99,11 @@ class CommentsScreenElements extends Component {
 
 const mapStateToProps = (state, ownProps) => {
 	const {index} = ownProps.navigation.state.params;
+	const {data: {width, height, src: url}} = state.feed.posts.results[index];
 	return {
-	    url: state.feed.posts.results[index].url,
+	    url,
+        height,
+        width,
 		comments: state.feed.posts.results[index].comments,
 		index,
 		postId: state.feed.posts.results[index]._id,
@@ -118,10 +111,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	const {index} = ownProps.navigation.state.params;
+	const {index, postId} = ownProps.navigation.state.params;
 	return {
 		onMountDispatch: () => {
-			dispatch(fetchComments({feedIndex: index}));
+			dispatch(fetchComments({feedIndex: index, postId}));
 		},
 		fetchNextComments: ({nextPageUrl}) => {
 			dispatch(fetchComments({nextPageUrl}));

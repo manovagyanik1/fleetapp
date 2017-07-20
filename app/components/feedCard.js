@@ -132,7 +132,7 @@ class FeedCard extends Component {
     const data = this.props.card;
     const feedId = data[Constants.ID];
     const {onReactionClick, onCommentClick, onShareClick, feedIndex} = this.props;
-    const {userReactions: {LOL, POOP}, commentCount, data: {width, src: url, height}, currentUserReaction} = data;
+    const {userReactions: {LOL, POOP}, commentCount, data: {width, src: url, height}, currentUserReaction, _id: postId} = data;
     const imgWidth = Dimensions.get('window').width;
     const scaleFactor = width / imgWidth;
     const imgHeight = height / scaleFactor;
@@ -143,7 +143,7 @@ class FeedCard extends Component {
           <View style={styles.cardFooter}>
               {this.getReactionContainer({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP})}
               <View style={styles.shareCommentContainer}>
-                  <TouchableWithoutFeedback onPress={() => onCommentClick(data.id)}>
+                  <TouchableWithoutFeedback onPress={() => onCommentClick({index: feedIndex, postId})}>
                       <Image style={styles.icon} source={require('../img/comment.png')} />
                   </TouchableWithoutFeedback>
 

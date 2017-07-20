@@ -53,8 +53,8 @@ class CommentCard extends Component {
 	render() {
 		const data = this.props.card;
 		const {onLikeClick, onProfileClick, feedIndex, commentIndex} = this.props;
-		const {postId, _id, text, currentUserReaction, userReaction, createdAt, user: {_id: userId, displayName, imageUrl}} = data;
-		const userReactionCount = Gen.getUserReactionCount({type: 'LIKE', userReaction});
+		const {postId, _id, text, currentUserReaction, userReactions, createdAt, user: {_id: userId, displayName, imageUrl}} = data;
+		const userReactionCount = Gen.getUserReactionCount({type: 'LIKE', userReactions});
 		const time = Gen.getDisplayTime(createdAt);
         // TODO: add currentUserReaction effect on like
 		return (

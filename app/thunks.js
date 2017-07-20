@@ -29,7 +29,7 @@ export const fetchComments = ({feedIndex, nextPageUrl = null, postId}) => (dispa
     // TODO: add pagination logic
 	dispatch(Actions.requestComments({nextPageUrl}));
 	dispatch(Actions.incrementAPICount({}));
-    const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/comments`;
+    const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/comments/${postId}`;
 	return fetch(url)
         .then(response => {
             return response.json();
