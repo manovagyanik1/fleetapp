@@ -1,4 +1,4 @@
-package com.firstlookreactnavigation;
+package com.lolmenow;
 
 import android.content.Intent;
 
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "FirstLookReactNavigation";
+        return "LolMeNow";
     }
 
     @Override

@@ -59,7 +59,7 @@ class Login extends Component {
         const url = `${Gen.getBaseUrl()}/v1/login/callback?code=${accessToken}`;
         return fetch(url)
             .then(data => data.json())
-            .then(token => Gen.onSignIn({userToken: data.token, userId: data.userId}));
+            .then(data => Gen.onSignIn({userToken: data.token, userId: data.userId}));
     }
 
 	fbAuth = () => {

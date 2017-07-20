@@ -26,10 +26,11 @@ export const Root = StackNavigator({
 	},
 	Feed: {
 		screen: Feed,
-		navigationOptions: {
-			title: 'Feed',
-            header: <FeedHeader />,
-		},
+        header: null,
+        headerMode: 'none',
+        navigationOptions: {
+            header: null,
+        },
 	},
 	Comments: {
 		screen: Comments,
