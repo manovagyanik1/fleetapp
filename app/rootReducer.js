@@ -41,7 +41,7 @@ const feed = (state = {
 		const newState = Gen.deepClone(state);
 		const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
 		comment.currentUserReaction = 'LIKE';
-        comment.userReaction['LIKE'] += 1;
+        comment.userReactions['LIKE'] += 1;
         return newState;
 	}
     case ActionTypes.REQUEST_COMMENT_USER_DEREACTION: {
@@ -49,7 +49,7 @@ const feed = (state = {
         const newState = Gen.deepClone(state);
         const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
         comment.currentUserReaction = null;
-        comment.userReaction['LIKE'] = Gen.max(comment.userReaction['LIKE'] - 1, 0);
+        comment.userReaction['LIKE'] = Gen.max(comment.userReactions['LIKE'] - 1, 0);
         return newState;
     }
     case ActionTypes.REQUEST_POST_USER_REACTION: {
@@ -58,17 +58,17 @@ const feed = (state = {
         const prevUserReaction = newState.posts.results[feedIndex].currentUserReaction;
         // decrement count of previous user reaction and increment the count of current user reaction
         if (prevUserReaction) {
-            newState.posts.results[feedIndex].userReaction[prevUserReaction] -= 1;
+            newState.posts.results[feedIndex].userReactions[prevUserReaction] -= 1;
         }
         newState.posts.results[feedIndex].currentUserReaction = reactionType;
-        newState.posts.results[feedIndex].userReaction[reactionType] += 1;
+        newState.posts.results[feedIndex].userReactions[reactionType] += 1;
         return newState;
     }
     case ActionTypes.REQUEST_POST_USER_DEREACTION: {
         const {feedIndex, reactionType} = action;
         const newState = Gen.deepClone(state);
         newState.posts.results[feedIndex].currentUserReaction = null;
-        newState.posts.results[feedIndex].userReaction[reactionType] -= 1;
+        newState.posts.results[feedIndex].userReactions[reactionType] -= 1;
         return newState;
     }
 	default:

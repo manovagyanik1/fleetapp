@@ -92,7 +92,7 @@ class FeedCard extends Component {
                           locations={[0.3, 0.3,1]}
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
-                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
                           <Image style={[styles.icon, styles.negativeLeftMargin, styles.opacity]} source={require('../img/poop.png')} />
                       </TouchableWithoutFeedback>
                   </View>);
@@ -108,7 +108,7 @@ class FeedCard extends Component {
                           locations={[0.3, 0.3,1]}
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
-                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                      <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
                           <Image style={[styles.icon, styles.negativeLeftMargin]} source={require('../img/poop.png')} />
                       </TouchableWithoutFeedback>
                   </View>);
@@ -121,7 +121,7 @@ class FeedCard extends Component {
                       <Image style={[styles.icon, styles.rightMargin]} source={require('../img/lol.png')} />
                   </TouchableWithoutFeedback>
 
-                  <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.HAHA})}>
+                  <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
                       <Image style={[styles.icon]} source={require('../img/poop.png')} />
                   </TouchableWithoutFeedback>
               </View>);
