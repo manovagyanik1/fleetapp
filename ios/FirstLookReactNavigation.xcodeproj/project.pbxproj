@@ -58,6 +58,7 @@
 		35DD9BACD3E547D195C94CB6 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 065F3B74DA094A3F9CF8DDC4 /* Roboto-Black.ttf */; };
 		DDBA79D70C774667A827603D /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09B9C74E27AC420F99680A13 /* libBVLinearGradient.a */; };
 		3614CE0998C64E189D12B986 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D2D4DFD8C34B0885D008AC /* libRCTOneSignal.a */; };
+		80620E4A67C345349D4D7DED /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D8EBADD337E4F4BAA78FE67 /* libRNSentry.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,8 @@
 		09B9C74E27AC420F99680A13 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		11726893972948C78DC01AA3 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		53D2D4DFD8C34B0885D008AC /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6002B0A21C0146419E47DF08 /* RNSentry.xcodeproj */ = {isa = PBXFileReference; name = "RNSentry.xcodeproj"; path = "../node_modules/react-native-sentry/ios/RNSentry.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0D8EBADD337E4F4BAA78FE67 /* libRNSentry.a */ = {isa = PBXFileReference; name = "libRNSentry.a"; path = "libRNSentry.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +349,7 @@
 				68075227E1964C9C8C572505 /* libsqlite3.0.tbd in Frameworks */,
 				DDBA79D70C774667A827603D /* libBVLinearGradient.a in Frameworks */,
 				3614CE0998C64E189D12B986 /* libRCTOneSignal.a in Frameworks */,
+				80620E4A67C345349D4D7DED /* libRNSentry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +524,7 @@
 				7078657A20A3420CA8F6211A /* RCTGoogleAnalyticsBridge.xcodeproj */,
 				70AB77FF198144BCA2D4BA26 /* BVLinearGradient.xcodeproj */,
 				11726893972948C78DC01AA3 /* RCTOneSignal.xcodeproj */,
+				6002B0A21C0146419E47DF08 /* RNSentry.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -589,6 +594,14 @@
 			path = "";
 			sourceTree = "<group>";
 		};
+		0AF4E4672FE241018BCB528A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			path = Application;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -618,6 +631,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				5DE0E6D6D7D54DDEA64BF913 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
 			);
@@ -991,7 +1005,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/sentry-cli-binary/bin/sentry-cli react-native xcode ../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1005,7 +1019,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/sentry-cli-binary/bin/sentry-cli react-native xcode ../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		5DE0E6D6D7D54DDEA64BF913 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Upload Debug Symbols to Sentry";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/sentry-cli-binary/bin/sentry-cli upload-dsym";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1099,6 +1127,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1110,6 +1139,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Debug;
@@ -1138,6 +1168,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1149,6 +1180,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Release;
@@ -1178,6 +1210,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Debug;
@@ -1206,6 +1239,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Release;
@@ -1243,6 +1277,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1254,6 +1289,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Debug;
@@ -1291,6 +1327,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1302,6 +1339,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-analytics-bridge/ios/RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/RCTOneSignal/**",
+					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 				);
 			};
 			name = Release;
@@ -1334,6 +1372,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1358,6 +1397,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
