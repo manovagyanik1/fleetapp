@@ -7,7 +7,7 @@ const fs = RNFetchBlob.fs;
 export default class Gen {
 
 	static isDevelopment() {
-		return true;
+		return false;
 	}
 
 	static isServer() {
@@ -19,7 +19,7 @@ export default class Gen {
 	}
 
 	static getBaseUrl() {
-		return Gen.isDevelopment() ? 'https://quicknodeserver.herokuapp.com' : 'https://lolmenow.com';
+		return Gen.isDevelopment() ? 'https://quicknodeserver.herokuapp.com' : 'http://www.lolmenow.com';
 	}
 
 	static getDisplayTime(time) {

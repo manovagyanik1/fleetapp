@@ -8,16 +8,17 @@ export const DATA_SOURCE_TYPE = {
 export const REACTION_TYPE = {
     LIKE: 'LIKE',
     LOL: 'LOL',
-    HAHA: 'HAHA',
-    WOW: 'WOW',
-    CLAP: 'CLAP',
     POOP: 'POOP',
-}
+};
 
 export const CONTENT_TYPE = {
     POST: 'POST',
     COMMENT: 'COMMENT',
-}
+};
+
+export const POST_TYPE = {
+    IMAGE: '0',
+};
 
 export const ID = '_id';
 export const USER_TOKEN = 'token';

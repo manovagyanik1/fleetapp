@@ -66,7 +66,7 @@ class FeedScreenElements extends Component {
                 style={styles.feedContainer}
                 refreshing={posts.isFetching === true}
                 onRefresh={() => onMountDispatch()}
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={5}
                 onEndReached={() => fetchNextPageFeed({nextPageUrl: posts.pageInfo.nextPageUrl})}
                 renderItem={({item, index}) => {
                   return <FeedCard

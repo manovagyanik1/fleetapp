@@ -77,26 +77,10 @@ const styles = StyleSheet.create({
 });
 
 class FeedCard extends Component {
-  state = {
-    imgWidth: 0,
-    imgHeight: 0,
-  };
 
-  componentDidMount() {
-    const data = this.props.card;
-    // TODO: use our api itself
-    Image.getSize(data.url, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get('window').width;
-      const scaleFactor = width / screenWidth;
-      const imageHeight = height / scaleFactor;
-      this.setState({imgWidth: screenWidth, imgHeight: imageHeight})
-    })
-  }
-
-    getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId}) => {
+    getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP}) => {
       if (currentUserReaction) {
-          if(currentUserReaction === 'LOL') {
+          if(currentUserReaction === Constants.REACTION_TYPE.LOL) {
               return (
                   <View style={styles.reactionsContainer}>
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
@@ -147,14 +131,17 @@ class FeedCard extends Component {
   render() {
     const data = this.props.card;
     const feedId = data[Constants.ID];
-    const {imgWidth, imgHeight} = this.state;
     const {onReactionClick, onCommentClick, onShareClick, feedIndex} = this.props;
-    const {userReaction: {CLAP, HAHA, LOL, WOW, COMMENT}, url, currentUserReaction} = data;
+    const {userReactions: {LOL, POOP}, commentCount, data: {width, src: url, height}, currentUserReaction} = data;
+    const imgWidth = Dimensions.get('window').width;
+    const scaleFactor = width / imgWidth;
+    const imgHeight = height / scaleFactor;
+
     const getFooter = () => {
-      if (imgHeight > 0) {
+      if (1) {
         return (
           <View style={styles.cardFooter}>
-              {this.getReactionContainer({currentUserReaction, onReactionClick, feedIndex, feedId})}
+              {this.getReactionContainer({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP})}
               <View style={styles.shareCommentContainer}>
                   <TouchableWithoutFeedback onPress={() => onCommentClick(data.id)}>
                       <Image style={styles.icon} source={require('../img/comment.png')} />
@@ -173,7 +160,7 @@ class FeedCard extends Component {
       <View style={styles.container}>
       <TouchableHighlight onPress={() => this.props.onCommentClick(this.props.card.id)}>
         <Image
-          source={{uri: data.url}}
+          source={{uri: url}}
           style={{height: imgHeight, width: imgWidth}}
           defaultSource={require("../img/placeholder.jpg")}>
         </Image>
