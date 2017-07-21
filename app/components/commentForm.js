@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropType from 'prop-types';
-import {View, Text, StyleSheet, TextInput, TouchableHighlight, KeyboardAvoidingView} from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableHighlight, TouchableWithoutFeedback, KeyboardAvoidingView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Gen from '../utils/gen';
 
@@ -32,6 +32,11 @@ class CommentForm extends Component {
 	componentDidMount() {
 	}
 
+	onCommentPost({postId, feedIndex, text}) {
+        this.props.onCommentPost({postId, feedIndex, text});
+        this.refs['commentText'].setNativeProps({text: ''});
+    }
+
 	render() {
 		const {onCommentPost, postId, feedIndex} = this.props;
 		return (
@@ -45,9 +50,11 @@ class CommentForm extends Component {
 					autoCorrect={false}
 					returnKeyType="go"
 				/>
-				<TouchableHighlight style={styles.buttonContainer} onPress={() => onCommentPost({postId, feedIndex, text: this.refs.commentText._lastNativeText})}>
-					<Icon name="md-send" size={30} color="#78059B" style={styles.icon} />
-				</TouchableHighlight>
+                <View style={styles.buttonContainer} >
+                    <TouchableWithoutFeedback onPress={() => this.onCommentPost({postId, feedIndex, text: this.refs.commentText._lastNativeText})}>
+                        <Icon name="md-send" size={30} color="#78059B" style={styles.icon} />
+                    </TouchableWithoutFeedback>
+                </View>
 			</View>
 		);
 	}

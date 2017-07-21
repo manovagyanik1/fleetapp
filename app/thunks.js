@@ -31,7 +31,8 @@ export const fetchComments = ({feedIndex, nextPageUrl = null, postId}) => (dispa
 	dispatch(Actions.requestComments({nextPageUrl}));
 	dispatch(Actions.incrementAPICount({}));
     const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/comments/${postId}`;
-	return fetch(url)
+    return Gen.getUserToken()
+        .then((token) => fetch(url, Gen.getBodyAuthHeader({token}))
         .then(response => {
             return response.json();
         })
@@ -39,7 +40,7 @@ export const fetchComments = ({feedIndex, nextPageUrl = null, postId}) => (dispa
 	Gen.log(paginatedComments);
 	dispatch(Actions.decrementAPICount({}));
 	dispatch(Actions.receiveComments({feedIndex, nextPageUrl, paginatedComments}));
-})
+}))
         .catch(errorFunc(Actions.errorComments, dispatch));
 };
 
