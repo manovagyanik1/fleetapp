@@ -163,13 +163,13 @@ class FeedCard extends Component {
 
     return (
       <View style={styles.container}>
-      <TouchableHighlight onPress={() => this.props.onCommentClick(this.props.card.id)}>
+      <TouchableWithoutFeedback onPress={() => this.props.onCommentClick({index: feedIndex, postId})}>
         <Image
           source={{uri: url}}
           style={{height: imgHeight, width: imgWidth}}
           defaultSource={require("../img/placeholder.jpg")}>
         </Image>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         {getFooter()}
       </View>
     );
