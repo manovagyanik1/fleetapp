@@ -14,6 +14,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import Gen from '../utils/gen';
 import CommentCard from '../components/commentCard';
 import CommentForm from '../components/commentForm';
+import Analytics, {SCREEN} from "../utils/analytics";
 
 const styles = StyleSheet.create({
 	container: {
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
 class CommentsScreenElements extends Component {
     componentDidMount() {
         this.props.onMountDispatch();
+        Analytics.trackScreenView(SCREEN.LOGIN);
     }
 
     getImageCard = () => {
@@ -56,14 +58,14 @@ class CommentsScreenElements extends Component {
             defaultSource={require('../img/placeholder.jpg')}
         />
             </ImageZoom>);
-    }
+    };
 
     getCommentPost = ({feedIndex, postId, onCommentPost}) => {
         return (<View style={styles.commentPost}>
             <CommentForm style={styles.commentPost} feedIndex={feedIndex} postId={postId}
                          onCommentPost={(data) => onCommentPost(data)}/>
         </View>);
-    }
+    };
 
     render() {
         const {index: feedIndex, comments, onLikeClick, onProfileClick, postId, onCommentPost, onMountDispatch, fetchNextComments} = this.props;

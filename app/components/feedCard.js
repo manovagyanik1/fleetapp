@@ -12,6 +12,7 @@ import {
 import * as Constants from '../constants';
 import ReactionAndCount from "./reactionAndCount";
 import LinearGradient from 'react-native-linear-gradient';
+import Analytics from "../utils/analytics";
 
 const styles = StyleSheet.create({
   container: {
@@ -77,6 +78,10 @@ const styles = StyleSheet.create({
 });
 
 class FeedCard extends Component {
+    componentDidMount(){
+        const {feedIndex} = this.props;
+        Analytics.trackFeedCard(feedIndex);
+    }
 
     getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP}) => {
       if (currentUserReaction) {

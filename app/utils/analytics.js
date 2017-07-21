@@ -27,37 +27,39 @@ const ACTION = {
 };
 
 // TODO: uninstall tracking
+// TODO: dev, I don't know why public static wasn't working. So I have to remove public/private declarations from functions
 
 export default class Analytics {
-    public static trackScreenView(screenName) {
+    static trackScreenView(screenName) {
         tracker.trackScreenView(screenName);
     }
 
-    public static setUser() {
+    static setUser() {
         tracker.setUser(Gen.getUserId().toString());
     }
 
-    private static trackEvent(category, action, optionalValues) {
+    static trackEvent(category, action, optionalValues) {
         tracker.trackEvent(category, action, optionalValues);
     }
 
-    public static trackFeedCard(feedId) {
+    static trackFeedCard(feedId) {
         Analytics.trackEvent(CATEGORY.FEED, ACTION.CLICK, {feedId});
     }
 
-    public static startSession() {
+    // NOTE: use it when you believe that a session is getting started
+    static startSession() {
         Analytics.trackEvent(CATEGORY.GARBAGE, ACTION.GARBAGE, {sessionControl: 'start'});
     }
 
-    public static commentClick(feedId) {
-        Analytics.trackEvent(CATEGORY.FEED_COMMENT, ACTION.CLICK, {feedId});
+    static commentClick(postId) {
+        Analytics.trackEvent(CATEGORY.FEED_COMMENT, ACTION.CLICK, {postId});
     }
 
-    public static feedShare(feedId) {
-        Analytics.trackEvent(CATEGORY.FEED_SHARE, ACTION.CLICK, {feedId});
+    static shareClick(postId) {
+        Analytics.trackEvent(CATEGORY.FEED_SHARE, ACTION.CLICK, {postId});
     }
 
-    public static feedReaction({feedId, reactionType}) {
-        Analytics.trackEvent(CATEGORY.FEED_REACTION, ACTION.CLICK, {feedId, reactionType});
+    static reactionClick({postId, reactionType}) {
+        Analytics.trackEvent(CATEGORY.FEED_REACTION, ACTION.CLICK, {postId, reactionType});
     }
 }

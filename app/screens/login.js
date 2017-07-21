@@ -5,6 +5,7 @@ import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Carousel from 'react-native-looped-carousel';
 import Gen from '../utils/gen';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Analytics, {SCREEN} from "../utils/analytics";
 
 
 const styles = StyleSheet.create({
@@ -77,8 +78,11 @@ class Login extends Component {
 }, (error) => {
 	Gen.log(`An error occured ${error}`);
 });
-	}
+	};
 
+    componentDidMount() {
+        Analytics.trackScreenView(SCREEN.LOGIN);
+    }
 
 	render() {
 		return (

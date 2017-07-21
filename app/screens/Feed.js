@@ -15,6 +15,7 @@ import {
 import Gen from "../utils/gen";
 import Splash from './splash';
 import FeedHeader from "../components/feedHeader";
+import Analytics, {SCREEN} from "../utils/analytics";
 
 
 const styles = StyleSheet.create({
@@ -42,13 +43,17 @@ const styles = StyleSheet.create({
 class FeedScreenElements extends Component {
   componentDidMount() {
       this.props.onMountDispatch();
+      Analytics.trackScreenView(SCREEN.LOGIN);
+      Analytics.setUser();
   }
 
   onCommentClick = ({index, postId}) => {
+      Analytics.commentClick(postId);
     this.props.navigation.navigate('Comments', {index, postId});
   };
 
   onShareClick = ({feedIndex, feedId, url}) => {
+      Analytics.shareClick(feedId);
       Gen.shareImage(url);
       // TODO: make api calls to backend to update share count
   };
@@ -102,6 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(fetchFeed({nextPageUrl}));
     },
     onReactionClick: ({feedIndex, feedId, reactionType}) => {
+        Analytics.reactionClick({postId: feedId, reactionType});
         dispatch(fetchFeedReaction({feedIndex, feedId, reactionType}));
     },
 }) ;
