@@ -24,9 +24,6 @@ const styles = StyleSheet.create({
 	    fontSize: 14,
 		fontWeight: 'bold',
 	},
-	textContent: {
-	    fontSize: 14,
-	},
 });
 
 // TODO: make it a pure/functional component
@@ -41,7 +38,6 @@ class CommentProfileHeader extends Component {
 				<Image style={styles.profilePic} source={{uri: url}} />
 				<View style={styles.textContainer}>
 					<Text style={styles.textHeader}>{name}</Text>
-					<Text style={styles.textContent}>{Gen.getDisplayTime(time)}</Text>
 				</View>
 			</View>
 		);

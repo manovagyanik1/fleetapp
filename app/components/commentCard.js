@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     commentText: {
 	  marginLeft: 50,
         fontSize: 16,
-        marginTop: 10,
+        marginTop: -15,
     },
     userLikeCount: {
 	    marginLeft: 8,
@@ -53,19 +53,19 @@ class CommentCard extends Component {
 	render() {
 		const data = this.props.card;
 		const {onLikeClick, onProfileClick, feedIndex, commentIndex} = this.props;
-		const {postId, _id, text, currentUserReaction, userReactions, createdAt, user: {_id: userId, displayName, imageUrl}} = data;
-		const userReactionCount = Gen.getUserReactionCount({type: 'LIKE', userReactions});
-		const time = Gen.getDisplayTime(createdAt);
+		const {postId, _id, text, currentUserReaction, userReactions, createdAt, userDetails: {_id: userId, fullName, nickName: displayName, profilePicUrl}} = data;
+        const LolCount = Gen.getUserReactionCount({type: 'LOL', userReactions});
+        const PoopCount = Gen.getUserReactionCount({type: 'POOP', userReactions});
         // TODO: add currentUserReaction effect on like
 		return (
 			<View style={styles.container}>
-				<CommentProfileHeader name={displayName} url={imageUrl} onProfileClick={onProfileClick} time={time} />
+				<CommentProfileHeader name={displayName} url={profilePicUrl} onProfileClick={onProfileClick} />
 				<Text style={styles.commentText}>{text}</Text>
 				<View style={styles.bottomContainer}>
 					<TouchableHighlight onPress={() => this.props.onLikeClick({feedIndex, commentIndex, commentId: data['_id'], reactionType: 'LIKE'})}>
 						<Icon name='thumbs-up' size={20} color='#000' style={styles.icon} />
 					</TouchableHighlight>
-					<Text style={styles.userLikeCount}>{userReactionCount}</Text>
+					<Text style={styles.userLikeCount}>{LolCount}</Text>
 				</View>
 			</View>
 		);

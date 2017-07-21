@@ -57,9 +57,20 @@ class Login extends Component {
 
     // returns a promise
     getLoginToken = (accessToken) => {
-        const url = `${Gen.getBaseUrl()}/v1/login/callback?code=${accessToken}`;
-        return fetch(url)
-            .then(data => data.json())
+        const url = `${Gen.getBaseUrl()}/v1/login/fb-access-token`;
+        const postData = {
+            accessToken
+        };
+        return fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)})
+            .then(data => {
+                return data.json();
+            })
             .then(data => Gen.onSignIn({userToken: data.token, userId: data.userId}));
     }
 

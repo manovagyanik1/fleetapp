@@ -81,10 +81,10 @@ export const fetchFeedReaction = ({feedIndex, feedId, reactionType}) => (dispatc
     return Gen.getUserToken()
         .then((token) => fetch(url, Gen.getPostBodyAuthHeader({token, postData}))
         .then(response => response.json())
-        .then(comment => {
-	Gen.log(comment);
+        .then(userReaction => {
+	Gen.log(userReaction);
 	dispatch(Actions.decrementAPICount());
-	dispatch(Actions.receivePostUserReaction({feedIndex, feedId, comment}));
+	dispatch(Actions.receivePostUserReaction({feedIndex, feedId, userReaction}));
 }))
         .catch(errorFunc(Actions.errorPostUserReaction(), dispatch));
 };
