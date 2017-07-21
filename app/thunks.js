@@ -15,13 +15,14 @@ export const fetchFeed = ({nextPageUrl = null}) =>
 	dispatch(Actions.requestFeed({nextPageUrl}));
 	dispatch(Actions.incrementAPICount({}));
 	const url = nextPageUrl ? `${Gen.getBaseUrl()}${nextPageUrl}` : `${Gen.getBaseUrl()}/v1/feed`;
-	return fetch(url)
+    return Gen.getUserToken()
+        .then((token) => fetch(url, Gen.getBodyAuthHeader({token}))
             .then(response => response.json())
             .then((paginatedPosts) => {
 	Gen.log(paginatedPosts);
 	dispatch(Actions.decrementAPICount({}));
 	dispatch(Actions.receiveFeed({nextPageUrl, paginatedPosts}));
-})
+}))
             .catch(errorFunc(Actions.errorFeed, dispatch));
 };
 
@@ -77,20 +78,14 @@ export const fetchFeedReaction = ({feedIndex, feedId, reactionType}) => (dispatc
 		reaction: reactionType,
 		type: Constants.CONTENT_TYPE.POST,
 	};
-	return fetch(url, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(postData),
-	})
+    return Gen.getUserToken()
+        .then((token) => fetch(url, Gen.getPostBodyAuthHeader({token, postData}))
         .then(response => response.json())
         .then(comment => {
 	Gen.log(comment);
 	dispatch(Actions.decrementAPICount());
 	dispatch(Actions.receivePostUserReaction({feedIndex, feedId, comment}));
-})
+}))
         .catch(errorFunc(Actions.errorPostUserReaction(), dispatch));
 };
 

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LolMeNow</string>
-    <string name="facebook_app_id">335195490233143</string>
+    <string name="facebook_app_id">157511728132373</string>
+    <string name="facebook_app_id_debug">335195490233143</string>
 </resources>

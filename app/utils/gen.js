@@ -94,6 +94,7 @@ export default class Gen {
 	}
 
 	static isSignedIn() {
+	    // Gen.onSignOut();
 		return new Promise((resolve, reject) => {
 			AsyncStorage.getItem(USER_TOKEN)
                 .then(res => {
@@ -153,5 +154,33 @@ export default class Gen {
                 })
                 .catch(err => reject(err));
         });
+    }
+
+    static getUserToken() {
+	    return AsyncStorage.getItem(USER_TOKEN);
+    }
+
+    static getBodyAuthHeader({token}) {
+        return {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                authorization: token,
+            }
+        };
+    }
+
+    static getPostBodyAuthHeader({token, postData}) {
+        const postBody = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                authorization: token,
+            },
+            body: JSON.stringify(postData),
+        };
+        return postBody;
     }
 }
