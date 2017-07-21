@@ -78,7 +78,7 @@ class CommentsScreenElements extends Component {
                             data={comments.results}
                             refreshing={comments.isFetching === true}
                             onRefresh={() => onMountDispatch()}
-                            onEndReachedThreshold={0.5}
+                            onEndReachedThreshold={3}
                             onEndReached={() => fetchNextComments({nextPageUrl: comments.pageInfo.nextPageUrl})}
                             style={styles.commentList}
                             removeClippedSubviews={false}

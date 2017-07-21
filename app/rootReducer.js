@@ -21,6 +21,7 @@ const feed = (state = {
 	}
 	case ActionTypes.RECEIVE_COMMENTS: {
 		const {feedIndex, paginatedComments: {results, pageInfo}, nextPageUrl} = action;
+		if(results.length === 0) return state;
 		const commentResults = state.posts.results[feedIndex].comments ? Gen.merge([...state.posts.results[feedIndex].comments.results], results) : results;
 		const statePageInfo = state.posts.results[feedIndex].comments ? {...state.posts.results[feedIndex].comments.pageInfo} : {};
 		statePageInfo.nextPageUrl = pageInfo.nextPageUrl;
