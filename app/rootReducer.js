@@ -37,11 +37,16 @@ const feed = (state = {
         return newState;
     }
 	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
-		const {feedIndex, commentIndex} = action;
+		const {feedIndex, commentIndex, reactionType} = action;
 		const newState = Gen.deepClone(state);
 		const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
-		comment.currentUserReaction = 'LIKE';
-        comment.userReactions['LIKE'] += 1;
+        const prevUserReaction = comment.currentUserReaction;
+        // decrement count of previous user reaction and increment the count of current user reaction
+        if (prevUserReaction) {
+            comment.userReactions[prevUserReaction] -= 1;
+        }
+        comment.currentUserReaction = reactionType;
+        comment.userReactions[reactionType] += 1;
         return newState;
 	}
     case ActionTypes.REQUEST_COMMENT_USER_DEREACTION: {
