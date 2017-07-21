@@ -13,6 +13,7 @@ import * as Constants from '../constants';
 import ReactionAndCount from "./reactionAndCount";
 import LinearGradient from 'react-native-linear-gradient';
 import Analytics from "../utils/analytics";
+import Gen from "../utils/gen";
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +85,7 @@ class FeedCard extends Component {
     }
 
     getReactionContainer = ({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP}) => {
+        const reactionRatio = Gen.getReactionRatio({LOL, POOP});
       if (currentUserReaction) {
           if(currentUserReaction === Constants.REACTION_TYPE.LOL) {
               return (
@@ -94,7 +96,7 @@ class FeedCard extends Component {
 
                       <LinearGradient
                           start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
-                          locations={[0.3, 0.3,1]}
+                          locations={[reactionRatio, reactionRatio,1]}
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
@@ -110,7 +112,7 @@ class FeedCard extends Component {
 
                       <LinearGradient
                           start={{x:0.0, y:0.5}} end={{x:1.0, y:0.5}}
-                          locations={[0.3, 0.3,1]}
+                          locations={[reactionRatio, reactionRatio,1]}
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>

@@ -183,4 +183,14 @@ export default class Gen {
         };
         return postBody;
     }
+
+    static getReactionRatio({LOL, POOP}) {
+	    if(LOL && LOL === 0) {
+	        return 0;
+        } else if(POOP && POOP ===0){
+	        return 1;
+        } else {
+            return LOL/(LOL + POOP);
+        }
+    }
 }
