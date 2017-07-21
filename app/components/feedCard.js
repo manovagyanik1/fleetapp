@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 15,
     elevation: 4,
+      alignItems:'flex-start',
+      justifyContent: 'flex-start',
     backgroundColor: "#FFFFFF",
     shadowColor: "black",
     shadowOpacity: 0.1,
@@ -39,9 +41,10 @@ const styles = StyleSheet.create({
     },
     reactionsContainer: {
       flex: 1,
+        height: 40,
         flexDirection: "row",
         justifyContent: 'flex-start',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginRight: 20,
         marginLeft: 20,
     },
@@ -58,11 +61,17 @@ const styles = StyleSheet.create({
         height: 15,
         borderRadius: 10,
         zIndex: 1,
+        alignSelf: 'center',
+        marginBottom: 20,
     },
     icon: {
       zIndex:2,
         height: 25,
         width: 25,
+    },
+    iconContainer: {
+      zIndex: 2,
+        alignItems: 'center',
     },
     negativeRightMargin: {
       marginRight: -10,
@@ -73,8 +82,11 @@ const styles = StyleSheet.create({
     rightMargin: {
       marginRight: 10,
     },
+    leftMargin: {
+        marginLeft: 10,
+    },
     opacity: {
-      opacity: 0.3,
+      opacity: 0.5,
     }
 });
 
@@ -91,7 +103,10 @@ class FeedCard extends Component {
               return (
                   <View style={styles.reactionsContainer}>
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
-                          <Image style={[styles.icon, styles.negativeRightMargin]} source={require('../img/lol.png')} />
+                          <View style={styles.iconContainer}>
+                              <Image style={[styles.icon]} source={require('../img/lol.png')} />
+                              <Text>{LOL}</Text>
+                          </View>
                       </TouchableWithoutFeedback>
 
                       <LinearGradient
@@ -100,14 +115,20 @@ class FeedCard extends Component {
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
-                          <Image style={[styles.icon, styles.negativeLeftMargin, styles.opacity]} source={require('../img/poop.png')} />
+                          <View style={styles.iconContainer}>
+                              <Image style={[styles.icon, styles.opacity]} source={require('../img/poop.png')} />
+                              <Text>{POOP}</Text>
+                          </View>
                       </TouchableWithoutFeedback>
                   </View>);
           } else {
               return (
                   <View style={styles.reactionsContainer}>
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
-                          <Image style={[styles.icon, styles.negativeRightMargin, styles.opacity]} source={require('../img/lol.png')} />
+                          <View style={styles.iconContainer}>
+                              <Image style={[styles.icon, styles.opacity]} source={require('../img/lol.png')} />
+                              <Text>{LOL}</Text>
+                          </View>
                       </TouchableWithoutFeedback>
 
                       <LinearGradient
@@ -116,7 +137,10 @@ class FeedCard extends Component {
                           colors={['#fada57', '#916233', '#916233']} style={styles.reactionIndicator} />
 
                       <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
-                          <Image style={[styles.icon, styles.negativeLeftMargin]} source={require('../img/poop.png')} />
+                          <View style={styles.iconContainer}>
+                              <Image style={[styles.icon]} source={require('../img/poop.png')} />
+                              <Text>{POOP}</Text>
+                          </View>
                       </TouchableWithoutFeedback>
                   </View>);
           }
@@ -125,11 +149,17 @@ class FeedCard extends Component {
           return (
               <View style={styles.reactionsContainer}>
                   <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.LOL})}>
-                      <Image style={[styles.icon, styles.rightMargin]} source={require('../img/lol.png')} />
+                      <View style={[styles.iconContainer, styles.rightMargin]}>
+                          <Image style={[styles.icon]} source={require('../img/lol.png')} />
+                          <Text></Text>
+                      </View>
                   </TouchableWithoutFeedback>
 
                   <TouchableWithoutFeedback onPress={() => onReactionClick({feedIndex, feedId, reactionType: Constants.REACTION_TYPE.POOP})}>
-                      <Image style={[styles.icon]} source={require('../img/poop.png')} />
+                      <View style={[styles.iconContainer, styles.leftMargin]}>
+                          <Image style={[styles.icon]} source={require('../img/poop.png')} />
+                          <Text></Text>
+                      </View>
                   </TouchableWithoutFeedback>
               </View>);
       }
@@ -151,11 +181,17 @@ class FeedCard extends Component {
               {this.getReactionContainer({currentUserReaction, onReactionClick, feedIndex, feedId, LOL, POOP})}
               <View style={styles.shareCommentContainer}>
                   <TouchableWithoutFeedback onPress={() => onCommentClick({index: feedIndex, postId})}>
-                      <Image style={styles.icon} source={require('../img/comment.png')} />
+                      <View style={styles.iconContainer}>
+                          <Image style={[styles.icon]} source={require('../img/comment.png')} />
+                          <Text>{commentCount}</Text>
+                      </View>
                   </TouchableWithoutFeedback>
 
                   <TouchableWithoutFeedback onPress={() => onShareClick({feedIndex, feedId, url})}>
-                      <Image style={styles.icon} source={require('../img/whatsapp.png')} />
+                      <View style={styles.iconContainer}>
+                          <Image style={[styles.icon]} source={require('../img/whatsapp.png')} />
+                          <Text></Text>
+                      </View>
                   </TouchableWithoutFeedback>
               </View>
           </View>
@@ -165,7 +201,7 @@ class FeedCard extends Component {
 
     return (
       <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => this.props.onCommentClick({index: feedIndex, postId})}>
+        <TouchableWithoutFeedback onPress={() => this.props.onCommentClick({index: feedIndex, postId})}>
         <Image
           source={{uri: url}}
           style={{height: imgHeight, width: imgWidth}}
