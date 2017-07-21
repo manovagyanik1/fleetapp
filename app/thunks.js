@@ -97,20 +97,14 @@ export const fetchComment = ({feedIndex, postId, text}) => (dispatch) => {
 		postId,
 		text,
 	};
-	return fetch(url, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(postData),
-	})
+    return Gen.getUserToken()
+        .then((token) => fetch(url, Gen.getPostBodyAuthHeader({token, postData}))
         .then(response => response.json())
         .then(comment => {
 	Gen.log(comment);
 	dispatch(Actions.decrementAPICount());
 	dispatch(Actions.receiveComment({feedIndex, postId, comment}));
-})
+}))
         .catch(errorFunc(Actions.errorComment(), dispatch));
 };
 

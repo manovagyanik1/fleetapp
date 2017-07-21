@@ -68,7 +68,7 @@ class CommentsScreenElements extends Component {
     };
 
     render() {
-        const {index: feedIndex, comments, onLikeClick, onProfileClick, postId, onCommentPost, onMountDispatch, fetchNextComments} = this.props;
+        const {index: feedIndex, comments, onReactionClick, onProfileClick, postId, onCommentPost, onMountDispatch, fetchNextComments} = this.props;
         return (
             <View style={styles.container}>
                 {comments && comments.results.length > 0 ?
@@ -85,7 +85,7 @@ class CommentsScreenElements extends Component {
                             renderItem={({item, index}) => (<CommentCard
                                 card={item}
                                 onProfileClick={onProfileClick}
-                                onLikeClick={onLikeClick}
+                                onReactionClick={onReactionClick}
                                 feedIndex={feedIndex}
                                 commentIndex={index}
                             />)}
@@ -121,7 +121,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		fetchNextComments: ({nextPageUrl}) => {
 			dispatch(fetchComments({nextPageUrl}));
 		},
-		onLikeClick: ({feedIndex, commentIndex, commentId, reactionType}) => {
+        onReactionClick: ({feedIndex, commentIndex, commentId, reactionType}) => {
 		    dispatch(fetchCommentReaction({feedIndex, commentIndex, commentId, reactionType}));
 		},
 		onProfileClick: ({userId}) => {
