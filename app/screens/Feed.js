@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
         width: '100%',
-        backgroundColor: 'rgba(255,255,255,0.85)',
+        backgroundColor: 'rgba(180,60,216,0.85)',
         height: 40,
     },
     feedHeaderPlaceholder: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         height: 40,
     },
     feedContainer: {
-        backgroundColor: "#999DA4",
+        backgroundColor: "rgba(180,60,216, .3)",
     }
 });
 

@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'row',
+        backgroundColor: '#fff',
 	},
 	input: {
 		height: 40,
-		backgroundColor: 'rgba(255, 255, 255, 0.2)',
 		marginBottom: 20,
+        fontSize: 16,
 		color: '#000',
 		paddingHorizontal: 10,
 		flexGrow: 1,
@@ -37,7 +38,7 @@ class CommentForm extends Component {
 			<View behavior="padding" style={styles.container}>
 				<TextInput
 					placeholder="Say something funny"
-					placeholderTextColor="#504C4C"
+					placeholderTextColor="rgba(120,5, 155, 1)"
 					style={styles.input}
 					autoCapitalize="none"
                     ref="commentText"
@@ -45,7 +46,7 @@ class CommentForm extends Component {
 					returnKeyType="go"
 				/>
 				<TouchableHighlight style={styles.buttonContainer} onPress={() => onCommentPost({postId, feedIndex, text: this.refs.commentText._lastNativeText})}>
-					<Icon name="md-send" size={30} color="#000" style={styles.icon} />
+					<Icon name="md-send" size={30} color="#78059B" style={styles.icon} />
 				</TouchableHighlight>
 			</View>
 		);

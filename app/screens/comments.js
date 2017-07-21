@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
+        backgroundColor: "rgba(180,60,216, .3)",
 	},
 	commentList: {
 	    flex: 1,

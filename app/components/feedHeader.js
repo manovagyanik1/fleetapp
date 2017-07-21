@@ -33,24 +33,24 @@ const styles = StyleSheet.create({
     },
     textHeaderLeft: {
         fontSize: 20,
-        color: '#CCCC00',
+        color: '#fff424',
         fontWeight: '900',
         fontFamily: 'Roboto-Black',
     },
     textHeaderCenter: {
         fontSize: 20,
-        color: '#CCCC00',
+        color: '#fff424',
         fontWeight: '100',
         fontFamily: 'Roboto-Black',
     },
     textHeaderCenterRight: {
-        color: '#916233',
+        color: '#593f22',
         fontFamily: 'Roboto-Black',
     },
     textHeaderRight: {
         fontSize: 20,
         fontWeight: '100',
-        color: '#916233',
+        color: '#593f22',
         fontFamily: 'Roboto-Black',
     },
 });

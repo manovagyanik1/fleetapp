@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
-		backgroundColor: '#3b5998',
+        backgroundColor: "rgba(180,60,216,1)",
 		justifyContent: 'center',
 	},
 	title: {
