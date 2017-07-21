@@ -12,18 +12,21 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
+        backgroundColor: '#B43BD8',
 	},
 	imageContainer: {
 	    flex: 1,
 		justifyContent: 'center',
+        height: '100%',
+        width: '100%',
 	},
 	carousel: {
 		width: '100%',
 		height: '85%',
 	},
 	image: {
-	    width: '90%',
-		height: '80%',
+	    width: '100%',
+		height: '100%',
 	},
 	facebookButton: {
 	    marginLeft: 20,
@@ -44,6 +47,7 @@ const styles = StyleSheet.create({
 	    margin: 10,
 		alignSelf: 'center',
 		fontSize: 16,
+        color: '#fff',
 	},
 });
 class Login extends Component {
@@ -99,17 +103,17 @@ class Login extends Component {
 		return (
 			<View style={styles.container}>
 				<Carousel
-					delay={2000}
+					delay={4000}
 					style={styles.carousel}
 					autoplay
 					bullets
-					chosenBulletStyle={{backgroundColor: '#3b5998'}}
+					chosenBulletStyle={{backgroundColor: '#4F0166'}}
 					bulletStyle={{backgroundColor: '#D3D3D3'}}
 					onAnimateNextPage={(p) => console.log(p)}
 				>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/img1.jpg')} /></View>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/img1.jpg')} /></View>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/img1.jpg')} /></View>
+					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen1.jpg')} /></View>
+					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen2.jpg')} /></View>
+					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen3.jpg')} /></View>
 				</Carousel>
 				<TouchableOpacity style={styles.facebookButton} onPress={this.fbAuth}>
 					<Icon name='logo-facebook' size={30} color='#fff' style={styles.icon} />
