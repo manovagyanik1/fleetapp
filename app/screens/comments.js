@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
 		bottom: 10,
 		height: 40,
 	},
+    image: {
+	    marginBottom: 15,
+    }
 });
 
 class CommentsScreenElements extends Component {
@@ -48,17 +51,16 @@ class CommentsScreenElements extends Component {
         const scaleFactor = width / imgWidth;
         const imgHeight = height / scaleFactor;
 
+        {/*<ImageZoom cropWidth={imgWidth}*/}
+                   {/*cropHeight={imgHeight}*/}
+                   {/*imageWidth={imgWidth}*/}
+                   {/*imageHeight={imgHeight}>*/}
         return (
-            <ImageZoom cropWidth={imgWidth}
-                       cropHeight={imgHeight}
-                       imageWidth={imgWidth}
-                       imageHeight={imgHeight}>
                 <Image
             source={{uri: url}}
-            style={{height: imgHeight, width: imgWidth}}
+            style={[{height: imgHeight, width: imgWidth}, styles.image]}
             defaultSource={require('../img/placeholder.jpg')}
-        />
-            </ImageZoom>);
+        />);
     };
 
     getCommentPost = ({feedIndex, postId, onCommentPost}) => {
