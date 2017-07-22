@@ -25,4 +25,4 @@ export const USER_TOKEN = 'token';
 export const USER_ID = 'user_id';
 
 // TODO: replace with the correct URL
-export const PLAY_STORE_URL = 'play.google.com/store/apps/details?id=com.spate.in';
+export const PLAY_STORE_URL = 'play.google.com/store/apps/details?id=com.lolmenow';

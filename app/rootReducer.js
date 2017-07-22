@@ -39,15 +39,17 @@ const feed = (state = {
     }
 	case ActionTypes.REQUEST_COMMENT_USER_REACTION: {
 		const {feedIndex, commentIndex, reactionType} = action;
-		const newState = Gen.deepClone(state);
-		const comment = newState.posts.results[feedIndex].comments.results[commentIndex];
-        const prevUserReaction = comment.currentUserReaction;
+        const newStateComment = Object.assign({}, state.posts.results[feedIndex].comments);
+        const newStateCommentResults = newStateComment.results[commentIndex];
+        const prevUserReaction = newStateCommentResults.currentUserReaction;
         // decrement count of previous user reaction and increment the count of current user reaction
         if (prevUserReaction) {
-            comment.userReactions[prevUserReaction] -= 1;
+            newStateCommentResults.userReactions[prevUserReaction] -= 1;
         }
-        comment.currentUserReaction = reactionType;
-        comment.userReactions[reactionType] += 1;
+        newStateCommentResults.currentUserReaction = reactionType;
+        newStateCommentResults.userReactions[reactionType] += 1;
+        state.posts.results[feedIndex].comments = newStateComment;
+        const newState = Object.assign({}, state);
         return newState;
 	}
     case ActionTypes.REQUEST_COMMENT_USER_DEREACTION: {
@@ -60,14 +62,16 @@ const feed = (state = {
     }
     case ActionTypes.REQUEST_POST_USER_REACTION: {
         const {feedIndex, reactionType} = action;
-        const newState = Gen.deepClone(state);
-        const prevUserReaction = newState.posts.results[feedIndex].currentUserReaction;
+        const newStatePost = Object.assign({}, state.posts.results[feedIndex]);
+        const prevUserReaction = newStatePost.currentUserReaction;
         // decrement count of previous user reaction and increment the count of current user reaction
         if (prevUserReaction) {
-            newState.posts.results[feedIndex].userReactions[prevUserReaction] -= 1;
+            newStatePost.userReactions[prevUserReaction] -= 1;
         }
-        newState.posts.results[feedIndex].currentUserReaction = reactionType;
-        newState.posts.results[feedIndex].userReactions[reactionType] += 1;
+        newStatePost.currentUserReaction = reactionType;
+        newStatePost.userReactions[reactionType] += 1;
+        state.posts.results[feedIndex] = newStatePost;
+        const newState = Object.assign({}, state);
         return newState;
     }
     case ActionTypes.REQUEST_POST_USER_DEREACTION: {
