@@ -3,6 +3,8 @@ import Gen from '../utils/gen';
 import Feed from './Feed';
 import Login from './login';
 import Splash from './splash';
+import {ToastAndroid} from 'react-native';
+
 
 export default class Home extends Component {
 	constructor(props) {
@@ -15,7 +17,7 @@ export default class Home extends Component {
 	}
 
 	componentWillMount() {
-		Gen.isSignedIn()
+        Gen.isSignedIn()
             .then(res => this.setState({signedIn: res, checkedSignIn: true}))
             .catch(err => alert('An error occurred'));
 	}

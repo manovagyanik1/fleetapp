@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ScrollView, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, Image, ScrollView, FlatList, TouchableOpacity, ToastAndroid, StyleSheet} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
 import Carousel from 'react-native-looped-carousel';
@@ -83,7 +83,8 @@ class Login extends Component {
             .then(data => {
                 return data.json();
             })
-            .then(data => Gen.onSignIn({userToken: data.token, userId: data.userId}));
+            .then(data => Gen.onSignIn({userToken: data.token, userId: data.userId}))
+            .catch(ex => ToastAndroid.show('Error while getting login token', ToastAndroid.SHORT));
     };
 
 	fbAuth = () => {
@@ -103,6 +104,7 @@ class Login extends Component {
 	}
 }, (error) => {
 	Gen.log(`An error occured ${error}`);
+    ToastAndroid.show('Error while logging in', ToastAndroid.SHORT);
 });
 	};
 
