@@ -6,6 +6,7 @@ import Carousel from 'react-native-looped-carousel';
 import Gen from '../utils/gen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Analytics, {SCREEN} from "../utils/analytics";
+import Splash from "./splash";
 
 
 const styles = StyleSheet.create({
@@ -51,11 +52,18 @@ const styles = StyleSheet.create({
 	},
 });
 class Login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loggingIn: false,
+        };
+    }
 	navigateToFeedPage = () => {
         const actionToDispatch = NavigationActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({routeName: 'Feed'})]
-        })
+        });
         this.props.navigation.dispatch(actionToDispatch);
 	};
 
@@ -76,7 +84,7 @@ class Login extends Component {
                 return data.json();
             })
             .then(data => Gen.onSignIn({userToken: data.token, userId: data.userId}));
-    }
+    };
 
 	fbAuth = () => {
 		LoginManager.logInWithReadPermissions(['public_profile'])
@@ -85,7 +93,10 @@ class Login extends Component {
 		Gen.log('login was cancelled');
 	} else {
 		AccessToken.getCurrentAccessToken()
-                .then(data => this.getLoginToken(data.accessToken))
+                .then(data => {
+                    this.setState({loggingIn: true});
+                    return this.getLoginToken(data.accessToken);
+                })
                 .then(() => this.navigateToFeedPage());
 
 		Gen.log(`login was success ${result.grantedPermissions.toString()}`);
@@ -101,26 +112,29 @@ class Login extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<Carousel
-					delay={4000}
-					style={styles.carousel}
-					autoplay
-					bullets
-					chosenBulletStyle={{backgroundColor: '#4F0166'}}
-					bulletStyle={{backgroundColor: '#D3D3D3'}}
-					onAnimateNextPage={(p) => console.log(p)}
-				>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen1.jpg')} /></View>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen2.jpg')} /></View>
-					<View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen3.jpg')} /></View>
-				</Carousel>
-				<TouchableOpacity style={styles.facebookButton} onPress={this.fbAuth}>
-					<Icon name='logo-facebook' size={30} color='#fff' style={styles.icon} />
-					<Text style={styles.facebookText}>Continue with facebook</Text>
-				</TouchableOpacity>
-				<Text style={styles.contentText}>We don't post anything to facebook</Text>
-			</View>
+            <View style={styles.container}>
+            {!this.state.loggingIn ?
+                <View style={styles.container}>
+                    <Carousel
+                        delay={4000}
+                        style={styles.carousel}
+                        autoplay
+                        bullets
+                        chosenBulletStyle={{backgroundColor: '#4F0166'}}
+                        bulletStyle={{backgroundColor: '#D3D3D3'}}
+                        onAnimateNextPage={(p) => console.log(p)}
+                    >
+                        <View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen1.jpg')} /></View>
+                        <View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen2.jpg')} /></View>
+                        <View style={styles.imageContainer}><Image style={styles.image} source={require('../img/loginScreen3.jpg')} /></View>
+                    </Carousel>
+                    <TouchableOpacity style={styles.facebookButton} onPress={this.fbAuth}>
+                        <Icon name='logo-facebook' size={30} color='#fff' style={styles.icon} />
+                        <Text style={styles.facebookText}>Continue with facebook</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.contentText}>We don't post anything to facebook</Text>
+                </View> : <Splash/>}
+            </View>
 		);
 	}
 }
