@@ -17,6 +17,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+import com.marianhello.react.BackgroundGeolocationPackage;
 import com.facebook.soloader.SoLoader;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -53,6 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
             new GoogleAnalyticsBridgePackage(),
             new RNFetchBlobPackage(),
             new RNSharePackage(),
+              new BackgroundGeolocationPackage(),
               new FBSDKPackage(mCallbackManager)
       );
     }

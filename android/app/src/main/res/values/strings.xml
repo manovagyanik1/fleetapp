@@ -2,4 +2,6 @@
     <string name="app_name">LolMeNow</string>
     <string name="facebook_app_id">157511728132373</string>
     <string name="facebook_app_id_debug">335195490233143</string>
+    <string name="account_type">com.lolmenow.account</string>
+    <string name="content_authority">com.lolmenow.authority</string>
 </resources>

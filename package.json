@@ -23,6 +23,7 @@
     "react-native-image-pan-zoom": "^2.0.4",
     "react-native-linear-gradient": "^2.1.0",
     "react-native-looped-carousel": "^0.1.7",
+    "react-native-mauron85-background-geolocation": "^0.2.0-alpha.7",
     "react-native-onesignal": "^3.0.4",
     "react-native-sentry": "^0.14.7",
     "react-native-share": "^1.0.20",
